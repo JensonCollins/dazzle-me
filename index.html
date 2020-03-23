@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <title>Dazzleme</title>
+</head>
+<style>
+    .container {
+        position: relative;
+    }
+    .systemclock {
+        bottom: auto;
+        width: 150px;
+        height: 50px;
+        background: white;
+        position: fixed;
+        min-height: 100%;
+        display: block;
+        z-index: 99;
+    }
+    canvas {
+        z-index: 2;
+    }
+</style>
+<body>
+<script>
+
+    Settings = {
+
+        "title": "Dazzleme",
+
+        "name": "Dazzleme",
+
+        "version": {"default": "1.0", "type": "string"},
+
+        "debug": {
+            "default": false,
+            "type": "boolean",
+            "editor": {
+                "title": "Debug mode",
+                "description": "Disable code compression, enable logging and some other debug functionality.",
+                "control": "switch",
+                "section": "system",
+                "priority": 10
+            }
+        },
+
+        "debug-logger": {
+            "default": "native",
+            "type": "select",
+            "values": ["native", "custom", "firebug", "none"],
+            "editor": {
+                "title": "Debug messages",
+                "description": "Where to show debug messages?",
+                "option-descriptions": {
+                    "none": "Disable debug messages",
+                    "native": "Regular browser console",
+                    "custom": "Over the ad",
+                    "firebug": "Firebug Lite"
+                },
+                "control": "radio",
+                "section": "system",
+                "priority": 10.1,
+                "dependency": {"name": "debug", "value": true}
+            }
+        },
+
+        "publisher": {
+            "type": "select",
+            "default": "none",
+            "values": ["google", "rovio", "sega", "kidoz", "facebook", "facebook-instant-games", "pocket-math", "playable-kit", "applovin", "unity-ads", "adcolony", "tapjoy", "iron-source", "vungle", "life-street", "aarki", "none"],
+            "description": "If you use one of listed ad networks choose it, to enable specific code and fixes."
+        },
+
+        "publisher-settings": {
+            "type": "key-value",
+            "default": {"width": 320, "height": 480, "fixed-size": false},
+            "description": "Various settings which needed for specific ad network."
+        },
+
+        "viewport-size": {
+            "type": "select",
+            "default": "window-inner-dimensions",
+            "values": ["mraid-max-size", "mraid-screen-size", "window-inner-dimensions", "screen-size"],
+            "editor": {
+                "title": "Viewport size",
+                "description": "Method to detect viewport size.",
+                "option-descriptions": {
+                    "mraid-max-size": "Mraid max size",
+                    "mraid-screen-size": "Mraid screen size",
+                    "window-inner-dimensions": "Window inner dimensions",
+                    "screen-size": "Screen size"
+                },
+                "control": "radio",
+                "section": "system",
+                "priority": 1
+            }
+        },
+
+        "viewport-size-protection": {
+            "default": true,
+            "type": "boolean",
+            "editor": {
+                "title": "Viewport size protection",
+                "description": "Sometimes mraid can return 10x10 px size of viewport or 414x414 px which is incorrect. Enable this options to stabilize and fix incorrect values.",
+                "control": "switch",
+                "section": "system",
+                "priority": 1.1
+            }
+        },
+
+        "viewport-aspect-ratio": {
+            "default": "none",
+            "type": "select",
+            "values": ["portrait", "landscape", "none"],
+            "description": "Viewport sizes aspect ratio. Set it to \"portrait\" or \"landscape\" if you want always show your ad in \"portrait\" or \"landscape\" mode."
+        },
+
+        "viewport-aspect-ratio-portrait": {
+            "default": 0.75,
+            "type": "number",
+            "description": "Maximum ratio of width to height. Used if \"Viewport aspect ratio\" is set to \"portrait\""
+        },
+
+        "viewport-aspect-ratio-landscape": {
+            "default": 0.75,
+            "type": "number",
+            "description": "Maximum ratio of height to width. Used if \"Viewport aspect ratio\" is set to \"landscape\""
+        },
+
+        "assets-path": {"default": "", "type": "string", "description": "Path to game assets on your server."},
+
+        "target-url": {"default": "", "type": "string"},
+
+        "web-mode": {"default": "redirect", "type": "select", "values": ["alert", "redirect", "mraid", "none"]},
+
+        "tween-factor-default": {
+            "default": 1,
+            "type": "number",
+            "control": "slider",
+            "editor": {
+                "title": "Default speed of animations",
+                "description": "Default speed of 'tween' and 'timeout' animations.",
+                "section": "main"
+            },
+            "playable-kit": true
+        },
+
+        "tween-factor-gameplay": {
+            "default": 1,
+            "type": "number",
+            "control": "slider",
+            "editor": {
+                "title": "Speed of gameplay animations",
+                "description": "Default speed of gameplay 'tween' and 'timeout' animations.",
+                "section": "main"
+            },
+            "playable-kit": true
+        },
+
+        "tween-factor-tutorial": {
+            "default": 1,
+            "type": "number",
+            "control": "slider",
+            "editor": {
+                "title": "Speed of tutorial animations",
+                "description": "Default speed of tutorial 'tween' and 'timeout' animations.",
+                "section": "main"
+            },
+            "playable-kit": true
+        },
+
+        "tween-factor-end-screen": {
+            "default": 1,
+            "type": "number",
+            "control": "slider",
+            "editor": {
+                "title": "Speed of end screen animations",
+                "description": "Default speed of end screen 'tween' and 'timeout' animations.",
+                "section": "main"
+            },
+            "playable-kit": true
+        },
+
+        "tween-factor-win-animation": {
+            "default": 0.8,
+            "type": "number",
+            "control": "slider",
+            "description": "Default speed of win animations"
+        },
+
+        "game-code-url": {"default": "Builds/cui-wild-7.min.js", "type": "string"},
+
+        "game-loader-url": {"default": "Builds/cui-wild-7-loader.min.js", "type": "string"},
+
+        "loading-overlay-styles": {"type": "css", "default": {}},
+
+        "loading-overlay-show-time": {
+            "type": "number",
+            "default": 200,
+            "playable-kit": true,
+            "editor": {"title": "Loading show time", "description": "Loading screen show animation time."}
+        },
+
+        "loading-overlay-hide-time": {
+            "type": "number",
+            "default": 1000,
+            "playable-kit": true,
+            "editor": {"title": "Loading hide time", "description": "Loading screen hide animation time."}
+        },
+
+        "loading-background-styles": {
+            "type": "css",
+            "default": {"background-color": "#000000", "transform": "scale(1.07)"}
+        },
+
+        "loading-icon-styles": {
+            "type": "css",
+            "default": {
+                "background": "url(assets/images/loader.png) no-repeat scroll center center / contain",
+                "left": "0",
+                "right": "0",
+                "top": "0",
+                "bottom": "0"
+            }
+        },
+
+        "loading-progress-styles": {
+            "type": "css",
+            "default": {
+                "background": "block",
+                "left": "38.5%",
+                "right": "36.5",
+                "width": "25%",
+                "top": "40.5%",
+                "height": "7px",
+                "background-color": "#555",
+            }
+        },
+        "loading-progress-fill-styles": {
+            "type": "css",
+            "default": {
+                "background": "block",
+                "left": "2%",
+                "width": "10%",
+                "bottom": "5%",
+                "height": "100%",
+                "background-color": "#78be20",
+            }
+        },
+
+        "loading-code-progress-percent": 0.5,
+
+        "loading-click-out": {
+            "default": true,
+            "type": "boolean",
+            "playable-kit": true,
+            "editor": {
+                "title": "Loading click out",
+                "description": "If true, loading screen will work like CTA button."
+            }
+        },
+
+        "load-on": {
+            "default": "immediately",
+            "type": "select",
+            "values": ["immediately", "none"],
+            "description": "If you need to load ad manually set this to 'none' and use 'Loader.load()' command."
+        },
+
+        "start-on": {
+            "default": "viewable",
+            "type": "select",
+            "values": ["load", "ready", "viewable", "none"],
+            "description": "If you need to show ad manually set this to 'none' and use 'App.startGame()' command."
+        },
+
+        "in-game-click-out": {
+            "default": "redirect",
+            "type": "select",
+            "values": ["cta", "redirect", "none"],
+            "description": "Action for the in-game cta button (if exist)"
+        },
+
+        "cta-only": {"default": false, "type": "boolean"},
+
+        "end-screen-click-out": {
+            "default": true,
+            "type": "boolean",
+            "description": "Make all end screen clickable or not."
+        },
+
+        "end-screen-click-out-block": {
+            "default": 1000,
+            "type": "number",
+            "description": "Timeout between end screen showed and possibility to click on cta buttons."
+        },
+
+        "click-out-multiple": {
+            "default": 1000,
+            "type": "number",
+            "description": "Minimal timeout between multiple clicks on CTA buttons. 0 will disable multiple clicks and allow only one click on CTA per session (recommended)."
+        },
+
+        "try-again": {
+            "default": 1,
+            "type": "number",
+            "playable-kit": true,
+            "editor": {
+                "title": "Try again",
+                "description": "Possibility to return in game after end screen and start to play again. You can specify count of possible replays here. 0 will disable replay button."
+            }
+        },
+
+        "gameplay-timeout": {
+            "default": 0,
+            "type": "number",
+            "playable-kit": {"multiplier": 1000},
+            "editor": {"title": "Gameplay timeout", "description": "Timeout from game start to the End Screen"}
+        },
+
+        "autoplay-timeout": {
+            "default": 0,
+            "type": "number",
+            "playable-kit": {"multiplier": 1000},
+            "editor": {
+                "title": "Autoplay timeout",
+                "description": "Timeout from rules/intro/tutorial screen to game start"
+            }
+        },
+
+        "idle-timeout": {
+            "default": 0,
+            "type": "number",
+            "playable-kit": {"multiplier": 1000},
+            "editor": {"title": "Idle timeout", "description": "Timeout from last user action to the End Screen"}
+        },
+
+        "custom-close-button": {"default": 0, "type": "number"},
+
+        "close-button-container-styles": {
+            "type": "css",
+            "default": {"opacity": "0.4", "width": "30px", "height": "30px", "right": "7px", "top": "7px"}
+        },
+
+        "close-button-bar-styles": {
+            "type": "css",
+            "default": {"strokeWidth": 5, "color": "#FFF", "trailColor": "#eee", "trailWidth": 1.1, "svgStyle": null}
+        },
+
+        "close-button-styles": {
+            "type": "css",
+            "default": {"width": "16px", "height": "16px", "right": "7px", "top": "7px", "backgroundSize": "80%"}
+        },
+
+        "close-button-timer-styles": {
+            "type": "css",
+            "default": {
+                "width": "17px",
+                "height": "16px",
+                "right": "7px",
+                "top": "7px",
+                "lineHeight": "16px",
+                "text-align": "center",
+                "fontFamily": "Arial",
+                "fontSize": "16px",
+                "color": "#FFF"
+            }
+        },
+
+        "rewarded-timeout": {
+            "default": 0,
+            "type": "number",
+            "description": "Timeout which blocks open and close mraid actions. So user must play specified count of time."
+        },
+
+        "rewarded-click-toggle": {
+            "default": true,
+            "type": "boolean",
+            "description": "Allow auto redirect toggle in rewarded-timeout mode if user click on CTA buttons several times."
+        },
+
+        "interstitial-timeout": {
+            "default": 0,
+            "type": "number",
+            "description": "Timeout with radial progress indicator for close-button."
+        },
+
+        "interstitial-action": {"default": "none", "type": "select", "values": ["cta", "redirect", "none"]},
+
+        "intro": {
+            "default": false,
+            "type": "boolean",
+            "playable-kit": true,
+            "editor": {"title": "Intro", "description": "If false, intro will be disabled"}
+        },
+
+        "tutorial": {
+            "default": false,
+            "type": "boolean",
+            "playable-kit": true,
+            "editor": {"title": "Tutorial", "description": "If false, tutorial will be disabled."}
+        },
+
+        "tutorial-timeout": {
+            "default": 500,
+            "type": "number",
+            "playable-kit": {"multiplier": 1000},
+            "editor": {"title": "Tutorial timeout", "description": "Timeout between last user action and tutorial."}
+        },
+
+        "assets-quality": {
+            "default": "high",
+            "type": "select",
+            "values": ["medium", "high", "low"],
+            "playable-kit": true,
+            "editor": {
+                "title": "Assets quality",
+                "description": "Quality of the images and sounds. Lower quality - faster loading. Medium quality is recommended for production. High quality recommended for the preview."
+            }
+        },
+
+        "filters-quality": {
+            "default": 1,
+            "type": "number",
+            "playable-kit": true,
+            "editor": {
+                "title": "Filters quality",
+                "description": "Quality multiplier for some of the filters from 0 to 1. 0 will disable all filters. Recommended to disable it on low power devices."
+            }
+        },
+
+        "particles-quality": {
+            "default": 0,
+            "type": "number",
+            "playable-kit": true,
+            "editor": {
+                "title": "Particle emitters quality",
+                "description": "Count of particles for the particle emitter effects. From 0% to 100%. You can also use more then 100% to increase count of particles."
+            }
+        },
+
+        "force-canvas-renderer": {
+            "default": true,
+            "type": "boolean",
+            "playable-kit": true,
+            "editor": {"title": "Force canvas renderer", "description": "If true, WebGL will be disabled."}
+        },
+
+        "precision-fragment": {"default": "mediump", "type": "select", "values": ["lowp", "mediump", "highp"]},
+
+        "sounds": {
+            "default": true,
+            "type": "select",
+            "values": [true, false, "delayed"],
+            "playable-kit": true,
+            "editor": {
+                "title": "Sounds load strategy",
+                "description": "Default load strategy for sounds: 'true' will preload sounds, 'false' will disable sounds and 'delayed' will load sounds after game started."
+            }
+        },
+
+        "creative-template-device": {
+            "default": "iPhone",
+            "type": "select",
+            "values": ["iPhone", "iPad", "iPhoneX"],
+            "description": "Default orientation in first launch inside Creative Preview"
+        },
+
+        "creative-template-orientation": {
+            "default": "landscape",
+            "type": "select",
+            "values": ["portrait", "landscape"],
+            "description": "Default orientation in first launch inside Creative Preview"
+        },
+
+        "track-events": {
+            "type": "info",
+            "description": "Loader Initialized, Code Loaded, Assets Loaded, Click Out - Loading Screen, Rewarded Timeout with Redirect, Rewarded Timeout, Interstitial Timeout, Interstitial Timeout - CTA, Interstitial Timeout - Click Out, Gameplay Timeout, Autoplay Timeout, Idle Timeout, Close Button Showed, Click Out - In Game, Close Click, End Screen Showed, Click Out - Interstitial Timeout, Click Out - End Screen, Game Starts, First Interaction, Interaction <n>"
+        },
+
+        "track-events-on-viewable": {"default": true, "type": "boolean"},
+
+        "track-google-analytics-key": {"default": "", "type": "string"},
+
+        "track-google-analytics-actions": {
+            "Loader Initialized": [["set", "appName", "Cui Wild 7"], ["set", "appVersion", "1.0"], ["set", "page", "Loading"], ["send", "pageview", {"sessionControl": "start"}], ["send", "event", "Loading", "Impression", "v1.0"]],
+            "Assets Loaded": [["send", "event", "Loading", "Game Loaded", "Not Skipped"]],
+            "Tutorial Show": [["set", "page", "Tutorial"], ["send", "pageview"], ["send", "event", "Gameplay", "Tutorial Started"]],
+            "Game Starts": [["set", "page", "Game"], ["send", "pageview"], ["send", "event", "Gameplay", "Game Started", "Play 1"]],
+            "Interaction 1": [["send", "event", "Gameplay", "Game Interacted"]],
+            "Interaction 2": [["send", "event", "Gameplay", "Game Interacted X", "2"]],
+            "Interaction 3": [["send", "event", "Gameplay", "Game Interacted X", "3"]],
+            "Game Completed": [["send", "event", "Gameplay", "Game Completed", "win", 1]],
+            "End Screen Showed": [["set", "page", "End"], ["send", "pageview"]],
+            "Retry": [["set", "page", "Replay"], ["send", "pageview"], ["send", "event", "Gameplay", "Game Started", "Play 2"]],
+            "Click Out - In Game": [["send", "event", "Exit", "CTA Pressed Game"]],
+            "Click Out - End Screen": [["send", "event", "Exit", "CTA Pressed End"]],
+            "Error": [["send", "event", "Diagnostic", "Error"]]
+        },
+
+        "track-mixpanel-key": {"default": "", "type": "string"},
+
+        "track-mixpanel-actions": {
+            "Loader Initialized": "Start Load Assets",
+            "Assets Loaded": "Assets Loaded",
+            "Game Starts": "Game Started",
+            "End Screen Showed": "End Screen Showed",
+            "Click Out - End Screen": "Click Out - End Screen",
+            "Click Out - In Game": "Click Out - In Game",
+            "Click Out - Loading Screen": "Click Out - Loading Screen",
+            "Error": "Error"
+        },
+
+        "track-impression-urls": {"default": [], "type": "list"},
+
+        "track-impression-actions": {"Loader Initialized": 0},
+
+        "track-libraries": {
+            "Loader Initialized": [["PlayableKit.analytics.loading", []]],
+            "Assets Loaded": [["PlayableKit.analytics.loaded", []]],
+            "Menu Showed": [["PlayableKit.analytics.menu", []]],
+            "Intro Started": [["PlayableKit.analytics.intro", []]],
+            "Game Starts": [["PlayableKit.analytics.game", []]],
+            "Interaction:multiple": [["PlayableKit.analytics.gameInteracted", []]],
+            "Game Completed": [["PlayableKit.analytics.gameOver", [0, 1]]],
+            "Outro Started": [["PlayableKit.analytics.outro", []]],
+            "End Screen Showed": [["PlayableKit.analytics.end", []]]
+        },
+
+        "complete-combinations": {
+            "spin 0": [{
+                "symbols": ["symbol-2.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-2.png", "symbol-4.png", "symbol-2.png", "symbol-3.png", "symbol-2.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-2.png", "symbol-4.png", "symbol-4.png"],
+                "winSymbols": [true, false, false, false, true, false, true, false, true, false, false, false, true, false, false],
+                "winPoints": 0.5
+            }, {
+                "symbols": ["symbol-8.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-8.png", "symbol-8.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-8.png", "symbol-1.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-1.png"],
+                "winSymbols": [false, false, true, false, false, false, true, false, true, false, true, false, false, false, true],
+                "winPoints": 0.5
+            }, {
+                "symbols": ["symbol-7.png", "symbol-1.png", "symbol-7.png", "symbol-1.png", "symbol-7.png", "symbol-7.png", "symbol-5.png", "symbol-7.png", "symbol-5.png", "symbol-7.png", "symbol-1.png", "symbol-5.png", "symbol-1.png", "symbol-5.png", "symbol-1.png"],
+                "winSymbols": [false, true, false, true, false, false, false, false, false, false, true, false, true, false, true],
+                "winPoints": 0.5
+            }, {
+                "symbols": ["symbol-7.png", "symbol-1.png", "symbol-7.png", "symbol-1.png", "symbol-7.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-7.png", "symbol-1.png", "symbol-7.png", "symbol-1.png", "symbol-7.png"],
+                "winSymbols": [false, false, false, false, false, true, true, true, true, true, false, false, false, false, false],
+                "winPoints": 0.5
+            }, {
+                "symbols": ["symbol-4.png", "symbol-4.png", "symbol-8.png", "symbol-4.png", "symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png", "symbol-4.png", "symbol-8.png", "symbol-4.png", "symbol-4.png"],
+                "winSymbols": [false, false, false, false, false, true, true, true, true, true, false, false, false, false, false],
+                "winPoints": 0.5
+            }],
+            "spin 1": [{
+                "symbols": ["symbol-4.png", "symbol-10.png", "symbol-4.png", "symbol-10.png", "symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png", "symbol-10.png", "symbol-4.png", "symbol-10.png", "symbol-4.png"],
+                "winSymbols": [false, true, false, true, false, true, true, true, true, true, false, true, false, true, false],
+                "winPoints": 1
+            }, {
+                "symbols": ["symbol-2.png", "symbol-5.png", "symbol-2.png", "symbol-5.png", "symbol-2.png", "symbol-8.png", "symbol-2.png", "symbol-5.png", "symbol-2.png", "symbol-8.png", "symbol-2.png", "symbol-5.png", "symbol-2.png", "symbol-5.png", "symbol-2.png"],
+                "winSymbols": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true],
+                "winPoints": 1
+            }, {
+                "symbols": ["symbol-7.png", "symbol-5.png", "symbol-2.png", "symbol-5.png", "symbol-7.png", "symbol-2.png", "symbol-2.png", "symbol-3.png", "symbol-2.png", "symbol-2.png", "symbol-7.png", "symbol-5.png", "symbol-2.png", "symbol-5.png", "symbol-7.png"],
+                "winSymbols": [false, false, true, false, false, true, true, false, true, true, false, false, true, false, false],
+                "winPoints": 1
+            }, {
+                "symbols": ["symbol-4.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-4.png", "symbol-1.png", "symbol-1.png", "symbol-1.png", "symbol-1.png", "symbol-1.png", "symbol-4.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-4.png"],
+                "winSymbols": [false, false, true, false, false, true, true, true, true, true, false, false, true, false, false],
+                "winPoints": 1
+            }, {
+                "symbols": ["symbol-3.png", "symbol-5.png", "symbol-5.png", "symbol-5.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-5.png", "symbol-5.png", "symbol-5.png", "symbol-3.png"],
+                "winSymbols": [true, false, false, false, true, true, true, true, true, true, true, false, false, false, true],
+                "winPoints": 1
+            }],
+            "spin 2": [{
+                "symbols": ["symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png", "symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png", "symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png"],
+                "winSymbols": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+                "winPoints": 1.5
+            }, {
+                "symbols": ["symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png", "symbol-10.png"],
+                "winSymbols": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+                "winPoints": 1.5
+            }, {
+                "symbols": ["symbol-4.png", "symbol-4.png", "symbol-2.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-2.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-4.png", "symbol-2.png", "symbol-4.png", "symbol-4.png"],
+                "winSymbols": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+                "winPoints": 1.5
+            }, {
+                "symbols": ["symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png", "symbol-3.png"],
+                "winSymbols": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+                "winPoints": 1.5
+            }, {
+                "symbols": ["symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png", "symbol-1.png", "symbol-4.png"],
+                "winSymbols": [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+                "winPoints": 1.5
+            }]
+        },
+
+        "Gameplay": {
+
+            "download button text": {"text": "DOWNLOAD NOW"},
+
+            "win text 0": {"text": "WIN:"},
+
+            "spin button text": {"text": "SPIN"},
+
+            "game board text": {"text": "50 PAYLINES"},
+
+            "congratulations button text": {"text": "Continue"}
+
+        },
+
+        "Tutorial": {},
+
+        "CallToAction": {},
+
+        "Assets": {
+
+            //--> image loading
+            "intro_background": {"type": "image", "url": "assets/images/background/intro_background.jpg"},
+            "game_background": {"type": "image", "url": "assets/images/background/game_background.jpg"},
+            "help_background": {"type": "image", "url": "assets/images/background/help_background.jpg"},
+            "intro_mark_1": {"type": "image", "url": "assets/images/intro_mark_1.png"},
+            "intro_mark_2": {"type": "image", "url": "assets/images/intro_mark_2.png"},
+            "logo": {"type": "image", "url": "assets/images/logo.png"},
+            "logo_1": {"type": "image", "url": "assets/images/logo_1.png"},
+            "logo_2": {"type": "image", "url": "assets/images/logo_2.png"},
+            "logo_3": {"type": "image", "url": "assets/images/logo_3.png"},            
+            "win_bar_flash": {"type": "image", "url": "assets/images/win_bar_flash.png"},
+            "win_bar_foreground": {"type": "image", "url": "assets/images/win_bar_foreground.png"},
+            "win_bar_glow": {"type": "image", "url": "assets/images/win_bar_glow.png"},
+            "paylines": {"type": "image", "url": "assets/images/paylines.png"},
+            "info_symbol_bg": {"type": "image", "url": "assets/images/info_symbol_bg.png"},
+            "status_panel": {"type": "image", "url": "assets/images/status_panel.png"},
+            // cards
+            "SYM0.png": {"type": "image", "url": "assets/images/cards/SYM0.png"},
+            "SYM0_glow.png": {"type": "image", "url": "assets/images/cards/SYM0_glow.png"},
+            "SYM0_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM0_BLURRED.png"},
+            "SYM1.png": {"type": "image", "url": "assets/images/cards/SYM1.png"},
+            "SYM1_glow.png": {"type": "image", "url": "assets/images/cards/SYM1_glow.png"},
+            "SYM1_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM1_BLURRED.png"},
+            "SYM2.png": {"type": "image", "url": "assets/images/cards/SYM2.png"},
+            "SYM2_glow.png": {"type": "image", "url": "assets/images/cards/SYM2_glow.png"},
+            "SYM2_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM2_BLURRED.png"},
+            "SYM3.png": {"type": "image", "url": "assets/images/cards/SYM3.png"},
+            "SYM3_glow.png": {"type": "image", "url": "assets/images/cards/SYM3_glow.png"},
+            "SYM3_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM3_BLURRED.png"},
+            "SYM4.png": {"type": "image", "url": "assets/images/cards/SYM4.png"},
+            "SYM4_glow.png": {"type": "image", "url": "assets/images/cards/SYM4_glow.png"},
+            "SYM4_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM4_BLURRED.png"},
+            "SYM5.png": {"type": "image", "url": "assets/images/cards/SYM5.png"},
+            "SYM5_glow.png": {"type": "image", "url": "assets/images/cards/SYM5_glow.png"},
+            "SYM5_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM5_BLURRED.png"},
+            "SYM6.png": {"type": "image", "url": "assets/images/cards/SYM6.png"},
+            "SYM6_glow.png": {"type": "image", "url": "assets/images/cards/SYM6_glow.png"},
+            "SYM6_BLURRED.png": {"type": "image", "url": "assets/images/cards/SYM6_BLURRED.png"},
+
+            //control
+            "check_on": {"type": "image", "url": "assets/images/controls/check_on.png"},
+            "slider_pointer": {"type": "image", "url": "assets/images/controls/slider_pointer.png"},            
+            "btn_normal": {"type": "image", "url": "assets/images/controls/btn_normal.png"},
+            "controlPanel_background": {"type": "image", "url": "assets/images/controls/controlPanel_background.png"},
+            
+            "spinButtonDisabled.png": {"type": "image", "url": "assets/images/controls/spinButtonDisabled.png"},
+            "spinButtonDown.png": {"type": "image", "url": "assets/images/controls/spinButtonDown.png"},
+            "spinButtonIdle.png": {"type": "image", "url": "assets/images/controls/spinButtonIdle.png"},
+            "spinButtonOver.png": {"type": "image", "url": "assets/images/controls/spinButtonOver.png"},
+            "autoPlayButtonDisabled.png": {"type": "image", "url": "assets/images/controls/autoPlayButtonDisabled.png"},
+            "autoPlayButtonDown.png": {"type": "image", "url": "assets/images/controls/autoPlayButtonDown.png"},
+            "autoPlayButtonOver.png": {"type": "image", "url": "assets/images/controls/autoPlayButtonOver.png"},
+            "autoPlayButtonUp.png": {"type": "image", "url": "assets/images/controls/autoPlayButtonUp.png"},
+            "paytableButtonDisabled.png": {"type": "image", "url": "assets/images/controls/paytableButtonDisabled.png"},
+            "paytableButtonDown.png": {"type": "image", "url": "assets/images/controls/paytableButtonDown.png"},
+            "paytableButtonOver.png": {"type": "image", "url": "assets/images/controls/paytableButtonOver.png"},
+            "paytableButtonUp.png": {"type": "image", "url": "assets/images/controls/paytableButtonUp.png"},
+            "paytableButtonUp.png": {"type": "image", "url": "assets/images/controls/paytableButtonUp.png"},
+            "element_background.png": {"type": "image", "url": "assets/images/controls/element_background.png"},
+            "selectorPlusDisabled.png": {"type": "image", "url": "assets/images/controls/selectorPlusDisabled.png"},
+            "selectorPlusDown.png": {"type": "image", "url": "assets/images/controls/selectorPlusDown.png"},
+            "selectorPlusOver.png": {"type": "image", "url": "assets/images/controls/selectorPlusOver.png"},
+            "selectorPlusUp.png": {"type": "image", "url": "assets/images/controls/selectorPlusUp.png"},
+            "selectorBarFill.png": {"type": "image", "url": "assets/images/controls/selectorBarFill.png"},
+            "close_btn_up.png": {"type": "image", "url": "assets/images/controls/paytable/x_button_off.png"},
+            "close_btn_over.png": {"type": "image", "url": "assets/images/controls/paytable/x_button_over.png"},
+            "arrow_previev_up.png": {"type": "image", "url": "assets/images/controls/paytable/paytable_left_button.png"},
+            "arrow_previev_over.png": {"type": "image", "url": "assets/images/controls/paytable/paytable_left_button_over.png"},
+            "indicator.png": {"type": "image", "url": "assets/images/controls/paytable/button_selector_down.png"},
+            "indicator_active.png": {"type": "image", "url": "assets/images/controls/paytable/button_selector_up.png"},
+            "indicator_over.png": {"type": "image", "url": "assets/images/controls/paytable/button_selector_over.png"},
+            "return.png": {"type": "image", "url": "assets/images/controls/paytable/return.png"},
+            "bonuspane.png": {"type": "image", "url": "assets/images/bonuspane.png"},
+            
+
+            //texture loading
+            "dazzlingAnimation": {"type": "atlas", "url": "assets/textures/dazzlingAni.json"},
+            "highlightAni_1": {"type": "atlas", "url": "assets/textures/highlight_1.json"},
+            "highlighAni_2": {"type": "atlas", "url": "assets/textures/highlight_2.json"},
+            
+            "btn_setting": {"type": "image", "url": "assets/images/bottom_bar/spanner_button1.png"},
+            "btn_speaker_off": {"type": "image", "url": "assets/images/bottom_bar/speaker_button1.png"},
+            "btn_speaker_on": {"type": "image", "url": "assets/images/bottom_bar/speaker_button.png"},
+            "btn_auto": {"type": "image", "url": "assets/images/bottom_bar/auto_button1.png"},
+            "btn_question": {"type": "image", "url": "assets/images/bottom_bar/questionmark_button1.png"},
+            "orient_switch": {"type": "atlas", "url": "assets/images/orient_switch.jpg"},
+
+            //sound loading
+            "background_music": {"type": "sound", "url": "assets/sounds/base/ambienceGeneral.mp3"},
+            "buttonClick": {"type": "sound", "url": "assets/sounds/base/buttonClick.mp3"},
+            "buttonHover": {"type": "sound", "url": "assets/sounds/base/buttonHover.mp3"},
+            "spinButtonClick": {"type": "sound", "url": "assets/sounds/base/spinButtonClick.mp3"},
+            "reelStop": {"type": "sound", "url": "assets/sounds/base/reelStop.mp3"},
+            "reelStop0": {"type": "sound", "url": "assets/sounds/base/reelStop0.mp3"},
+            "reelStop1": {"type": "sound", "url": "assets/sounds/base/reelStop1.mp3"},
+            "reelStop2": {"type": "sound", "url": "assets/sounds/base/reelStop2.mp3"},
+            "reelStop3": {"type": "sound", "url": "assets/sounds/base/reelStop3.mp3"},
+            "reelStop4": {"type": "sound", "url": "assets/sounds/base/reelStop4.mp3"},
+            "smallWin": {"type": "sound", "url": "assets/sounds/base/smallWin.mp3"},
+            "mediumWin": {"type": "sound", "url": "assets/sounds/base/mediumWin.mp3"},
+            "largeWin": {"type": "sound", "url": "assets/sounds/base/largeWin.mp3"},
+            "bigWinStart": {"type": "sound", "url": "assets/sounds/base/bigWinStart.mp3"},
+            "bonus.mp3": {"type": "sound", "url": "assets/sounds/bigwin.mp3"},
+
+            //bitmap font loading
+            "game_font": {"type": "bitmap-font", "url": "assets/textures/game_font.png"},
+
+            // atlas loading
+            "netent_logo": {"type": "atlas", "url": "assets/textures/featureSplash/Netent_Logo.json"},
+            "netent_logo2": {"type": "atlas", "url": "assets/textures/featureSplash/Netent_Logo2.json"},
+
+            //font loading
+            "Myriad Pro Black Condensed": {"type": "web-font", "url": "Fonts/Myriad Pro Black Condensed.css"},
+            "Oswald-Bold": {"type": "web-font", "url": "Fonts/Oswald-Bold.css"},
+            "a_LCDNova": {"type": "web-font", "url": "Fonts/a_LCDNova.css"},
+            "AGLettericaDemiCondensedC": {"type": "web-font", "url": "Fonts/AGLettericaDemiCondensedC.css"},
+            "Vinque": {"type": "web-font", "url": "Fonts/Vinque.css"},
+            "BerlinSansFBDemi-Bold": {"type": "web-font", "url": "Fonts/BerlinSansFBDemi-Bold.css"},
+            "Bauhaus_93_regular": {"type": "web-font", "url": "Fonts/Bauhaus_93_regular.css"},
+            "NETENT_MyriadPro-Bold" : {"type": "web-font", "url":"Fonts/NETENT_MyriadPro-Bold.css"},
+            "NETENT_MyriadPro-Regular" : {"type": "web-font", "url":"Fonts/NETENT_MyriadPro-Regular.css"},
+            "pfdindisplaypro-reg-webfont" : {"type": "web-font", "url":"Fonts/pfdindisplaypro-reg-webfont.css"},
+        }
+
+    };
+</script>
+<script>Settings["game-code-url"] = false;</script>
+
+<script src="App/jquery-3.4.1.js"></script>
+
+<script src="App/Libs/Broadcast/Broadcast.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Mraid.js"></script>
+
+<script src="App/Libs/Platform/platform.js"></script>
+
+<script src="App/Libs/WebFont/webfont.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Loader.js"></script>
+
+<!--script src="App/Loader.js"></script-->
+
+<script src="App/Libs/Pixi/4.7.1-ga-ready/pixi.js"></script>
+
+<script src="App/Libs/Pixi/pixi-sound.js"></script>
+
+<script src="App/Libs/Pixi/pixi-filters.js"></script>
+
+<script src="App/Libs/Pixi/pixi-spine.js"></script>
+
+<script src="App/Libs/Underscore/underscore-min.js"></script>
+
+<script src="App/Libs/GreenSock/1.20.4/TweenLite.js"></script>
+
+<script src="App/Libs/GreenSock/1.20.4/easing/EasePack.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Class.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Game.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Game.Pixi.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.Pixi.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.Tween.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.Emitter.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.Text.js"></script>
+
+<script src="App/Libs/Pixi.Classes/Screen.Underscore.js"></script>
+
+<script src="App/Libs/Progressbar/progressbar.js"></script>
+
+<script src="Math/Slots/Escalibur.js"></script>
+
+<script src="App/App.js"></script>
+
+<script src="App/SoundManager.js"></script>
+
+<script src="App/Screens/CallToAction.js"></script>
+
+<script src="App/Screens/Gameplay.js"></script>
+
+<script src="App/Screens/Tutorial.js"></script>
+
+<script src="App/Screens/NETENT_Animation.js"></script>
+
+</body>
+</html>
