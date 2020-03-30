@@ -26,6 +26,9 @@ var App = new Game({
         },
         {
             Image: 'SYM6.png'
+        },
+        {
+            Image: 'SYM7.png'
         }
     ],
 
@@ -83,11 +86,12 @@ var App = new Game({
     SymbolsNames: {
         'blue': 'SYM0.png',
         'green': 'SYM1.png',
-        'purple': 'SYM2.png',
-        'pink': 'SYM3.png',
-        'yellow': 'SYM4.png',
+        'pink': 'SYM2.png',
+        'red': 'SYM3.png',
+        'bell': 'SYM4.png',
         'seven': 'SYM5.png',
-        'freespin': 'SYM6.png'
+        'freespin': 'SYM6.png',
+        'wild': 'SYM7.png'
     },
 
     ScatterNames: [''],

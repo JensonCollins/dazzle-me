@@ -5,13 +5,14 @@
         this.Name = 'Escalibur';
 
         this.UniqueSymbols = [
-            "blue", //0
-            "green",
-            "purple",
-            "pink",
-            "yellow",
+            "freespin",
+            "wild",
             "seven", //5
-            "freespin"
+            "bell", //0
+            "red",
+            "pink",
+            "green",
+            "blue",
         ];
 
         this.ReelSymbols = [

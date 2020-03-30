@@ -18,78 +18,6 @@ App.Gameplay = new Screen({
                                     image: 'game_background',
                                     scale: [1920 / 1280, 1080 / 720]
                                 },
-                                {   name: 'LogoContainer', visible:true,
-                                    childs: [
-                                        {
-                                            name: 'logo',
-                                            type: 'sprite',
-                                            position: [-550, -435],
-                                            image: 'logo',
-                                            scale: [1.5, 1.5],//[1.31, 1.44],
-                                            visible: false,
-                                            event: 'screen'
-                                        },
-                                        {   name: 'logo 3',
-                                            type: 'sprite',
-                                            position: [-570, -445],
-                                            //image: 'logo_3',
-                                            scale: [1.3, 1.3],
-                                            rotation: -0.1,
-                                            visible: true,
-                                            childs: [
-                                                {   name: 'logo 2',
-                                                    type: 'sprite',
-                                                    position: [0, 0],
-                                                    image: 'logo_2',
-                                                    childs: [
-                                                        {   name: 'dazzlime',
-                                                            type: 'sprite',
-                                                            position: [50, 0],
-                                                            image: 'dazzlingAni-00.png',
-                                                            childs: [
-                                                                {   name: 'logo 1',
-                                                                    type: 'sprite',
-                                                                    position: [-180, 0],
-                                                                    image: 'logo_1',
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            name: 'logo text',
-                                            type: 'text',
-                                            text: '125',
-                                            position: [-550, -400],
-                                            visible: false,
-                                            styles: {
-                                                fill: 0x000000,//0xffffff,
-                                                fontFamily: "PFDinDisplayPro-Black",
-                                                fontSize: '45px',
-                                                dropShadow: true,
-                                                dropShadowAngle: 0.5,
-                                                dropShadowColor: 0x875f3a,
-                                                dropShadowDistance: 1,
-                                                dropShadowBlur: 25,
-                                                padding: 20
-                                            }
-                                        },
-                                        // {
-                                        //     name: "win points",
-                                        //     type: 'bitmap-text',
-                                        //     text: '123',
-                                        //     position: [-550, -425],
-                                        //     styles: {
-                                        //         font: {
-                                        //             name: 'game_font',
-                                        //             size: '60px'
-                                        //         },
-                                        //     }
-                                        // }
-                                    ]
-                                },
                             ]
                         }
                     ]
@@ -108,14 +36,16 @@ App.Gameplay = new Screen({
                                     childs: []
                                 },
                                 {   name: 'game board container',
-                                    scale: [1.0, 1.0],//[1519 / 1522, 726 / 732],
-                                    visible: true,
                                     position: [0, -75],
                                     childs: [
                                         {
                                             name: 'game board symbols wildcard container',
                                             childs: []
-                                        } ,
+                                        },
+                                        {
+                                            name: 'game board symbols back container',
+                                            childs: []
+                                        },
                                         {
                                             name: 'game board symbols container',
                                             childs: []
@@ -125,6 +55,63 @@ App.Gameplay = new Screen({
                                             draw: [['beginFill', 0x000000], ['drawRect', [-1920, -1920, 3840, 3840]]],
                                             alpha: 0.7,
                                             visible: false
+                                        },
+                                        {
+                                            name: 'glow overlay',
+                                            childs: [
+                                                {
+                                                    name: 'reel 0 glow overlay',
+                                                    type: 'sprite',
+                                                    scale: [1.51, 1.12],
+                                                    position: [-470, 0],
+                                                    image: 'linkedReelsFrameGlow',
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            name: 'reel 0 whiteblast',
+                                                            type: 'sprite',
+                                                            visible: false,
+                                                            mask: 'reel 1 passive overlay',
+                                                            position: [-95, -3],
+                                                            image: 'wildWhiteBlast'
+                                                        },
+                                                        {
+                                                            name: 'reel 1 whiteblast',
+                                                            type: 'sprite',
+                                                            visible: false,
+                                                            mask: 'reel 2 passive overlay',
+                                                            position: [105, -3],
+                                                            image: 'wildWhiteBlast'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'reel 2 glow overlay',
+                                                    type: 'sprite',
+                                                    visible: false,
+                                                    scale: [1.51, 1.5],
+                                                    position: [138, 0],
+                                                    image: 'linkedReelsFrameGlow',
+                                                    childs: [
+                                                        {
+                                                            name: 'reel 2 whiteblast',
+                                                            type: 'sprite',
+                                                            visible: false,
+                                                            mask: 'reel 3 passive overlay',
+                                                            position: [-95, -3],
+                                                            image: 'wildWhiteBlast'
+                                                        },
+                                                        {
+                                                            name: 'reel 3 whiteblast',
+                                                            mask: 'reel 4 passive overlay',
+                                                            type: 'sprite',
+                                                            visible: false,
+                                                            position: [105, -3],
+                                                            image: 'wildWhiteBlast'
+                                                        }
+                                                    ]
+                                                },
+                                            ]
                                         },
                                         {   name: 'passive overlay',
                                             alpha: 0,
@@ -157,6 +144,106 @@ App.Gameplay = new Screen({
                                             ]
                                         },
                                         {
+                                            name: 'reel wild overlay',
+                                            childs: [
+                                                {
+                                                    name: 'reel 1 wild overlay',
+                                                    scale: [1.51, 1.12],
+                                                    position: [-615, -3],
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            type: 'sprite',
+                                                            scale: 3,
+                                                            image: 'wildSoftOverlay'
+                                                        },
+                                                        {
+                                                            name: 'reel 1 wild back',
+                                                            scale: [0.03, 1],
+                                                            type: 'sprite',
+                                                            image: 'wildWhiteBlast',
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'reel 2 wild overlay',
+                                                    scale: [1.51, 1.12],
+                                                    position: [-312, -3],
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            type: 'sprite',
+                                                            scale: 3,
+                                                            image: 'wildSoftOverlay'
+                                                        },
+                                                        {
+                                                            name: 'reel 2 wild back',
+                                                            scale: [0.03, 1],
+                                                            type: 'sprite',
+                                                            image: 'wildWhiteBlast',
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'reel 3 wild overlay',
+                                                    scale: [1.51, 1.5],
+                                                    position: [0, -3],
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            type: 'sprite',
+                                                            scale: 3,
+                                                            image: 'wildSoftOverlay'
+                                                        },
+                                                        {
+                                                            name: 'reel 3 wild back',
+                                                            scale: [0.03, 1],
+                                                            type: 'sprite',
+                                                            image: 'wildWhiteBlast',
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'reel 4 wild overlay',
+                                                    scale: [1.51, 1.5],
+                                                    position: [300, -3],
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            type: 'sprite',
+                                                            scale: 3,
+                                                            image: 'wildSoftOverlay'
+                                                        },
+                                                        {
+                                                            name: 'reel 4 wild back',
+                                                            scale: [0.03, 1],
+                                                            type: 'sprite',
+                                                            image: 'wildWhiteBlast',
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'reel 5 wild overlay',
+                                                    scale: [1.51, 1.9],
+                                                    position: [610, -3],
+                                                    visible: false,
+                                                    childs: [
+                                                        {
+                                                            type: 'sprite',
+                                                            scale: 3,
+                                                            image: 'wildSoftOverlay'
+                                                        },
+                                                        {
+                                                            name: 'reel 5 wild back',
+                                                            scale: [0.03, 1],
+                                                            type: 'sprite',
+                                                            image: 'wildWhiteBlast',
+                                                        }
+                                                    ]
+                                                },
+                                            ]
+                                        },
+                                        {
                                             name: 'game board symbols flash container',
                                             childs: []
                                         },
@@ -165,42 +252,12 @@ App.Gameplay = new Screen({
                                             childs: []
                                         },
                                         {
+                                            name: 'game board symbols wilds container',
+                                            childs: []
+                                        },
+                                        {
                                             name: 'game board winLines',
                                             childs: []
-                                        }
-                                    ]
-                                },
-                                {   name: 'test animation',
-                                    position: [0, -45],
-                                    childs: []
-                                },
-                                {   name: 'close button',
-                                    type: 'graphics',
-                                    button: 'button', visible:false,
-                                    position: [870, -480],
-                                    draw: [['beginFill', 0x5555dd], ['drawRoundedRect', [-90 / 2, -35 / 2, 90, 35, 15]]],
-                                    childs: [
-                                        {
-                                            name: 'close button glow',
-                                            type: 'graphics'
-                                        },
-                                        {
-                                            name: 'close button border',
-                                            type: 'graphics',
-                                            position: [0, 0],
-                                            draw: [['lineStyle', 2, 0x000000, 0.5], ['beginFill', 0x1e50be], ['drawRoundedRect', [-85 / 2, -30 / 2, 85, 30, 15]]]
-                                        },
-                                        {
-                                            name: 'close button text',
-                                            type: 'text',
-                                            text: 'More games',
-                                            position: [0, 0],
-                                            styles: {
-                                                align: 'center',
-                                                fontFamily: 'Arial',
-                                                fontSize: '12px',
-                                                fill: 0xffffff
-                                            }
                                         }
                                     ]
                                 },
@@ -225,13 +282,13 @@ App.Gameplay = new Screen({
                             type: 'text',
                             position: [0, 0],
                             scale: [1, 1.1],
-                            text: 'win on up to 76 bet lines',
+                            text: 'Win on up to 76 bet lines',
                             styles: {
                                 align: 'left',
-                                fill: 0xffffff,
-                                fontSize: '25px',
-                                fontWeight: 800,
-                                fontFamily: 'Arial'
+                                fill: 0xedeba9,
+                                fontWeight: '300',
+                                fontSize: '30px',
+                                fontFamily: 'PFDinDisplayPro-Bold'
                             },
                             update: null
                         },
@@ -247,7 +304,7 @@ App.Gameplay = new Screen({
                                         fill: 0xffffff,
                                         fontSize: '35px',
                                         fontWeight: 800,
-                                        fontFamily: 'Arial'
+                                        fontFamily: 'PFDinDisplayPro-Black'
                                     }
                                 },
                                 {   name: 'status win amount text',
@@ -260,7 +317,78 @@ App.Gameplay = new Screen({
                                         fill: 0xffff00,
                                         fontSize: '40px',
                                         fontWeight: 800,
-                                        fontFamily: 'Arial'
+                                        fontFamily: 'PFDinDisplayPro-Black'
+                                    }
+                                },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: 'FreespinStatsuBarContainer',
+                    visible: false,
+                    position: [-510, 265],
+                    scale: [1920 / 1280, 1080/ 720],
+                    childs: [
+                        {
+                            name: 'freespin win box',
+                            childs: [
+                                {
+                                    type: 'text',
+                                    position: [-155, 0],
+                                    scale: [1, 1.1],
+                                    text: 'WIN:',
+                                    styles: {
+                                        align: 'left',
+                                        fill: 0xffffff,
+                                        fontSize: '30px',
+                                        fontWeight: 800,
+                                        fontFamily: 'PFDinDisplayPro-Black'
+                                    }
+                                },
+                                {   name: 'freespin status win amount text',
+                                    type: 'text',
+                                    position: [160, 0],
+                                    scale: [1, 1.1],
+                                    text: '0',
+                                    styles: {
+                                        align: 'right',
+                                        fill: 0xffff00,
+                                        fontSize: '35px',
+                                        fontWeight: 800,
+                                        fontFamily: 'PFDinDisplayPro-Black'
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            name: 'freespin totalwin box',
+                            position: [0, 37],
+                            childs: [
+                                {
+                                    type: 'text',
+                                    position: [-106, 0],
+                                    scale: [1, 1.1],
+                                    text: 'TOTAL WIN:',
+                                    styles: {
+                                        align: 'left',
+                                        fill: 0xffffff,
+                                        fontSize: '30px',
+                                        fontWeight: 800,
+                                        fontFamily: 'PFDinDisplayPro-Black'
+                                    }
+                                },
+                                {   name: 'freespin status totalWin amount text',
+                                    type: 'text',
+                                    position: [160, 0],
+                                    scale: [1, 1.1],
+                                    text: '0',
+                                    styles: {
+                                        align: 'right',
+                                        fill: 0xffff00,
+                                        fontSize: '35px',
+                                        fontWeight: 800,
+                                        fontFamily: 'PFDinDisplayPro-Black'
                                     }
                                 },
                             ]
@@ -280,7 +408,7 @@ App.Gameplay = new Screen({
                         },
                         {   name: 'info background',
                             type: 'sprite',
-                            image: 'help_background',
+                            image: 'paytableBackground',
                             event: 'infobackground',
                             position: [0, -30],
                             scale: [1920/1280, 1080/720],
@@ -292,7 +420,7 @@ App.Gameplay = new Screen({
                                         {   name: 'info close button',
                                             type: 'sprite',
                                             image: 'close_btn_up.png',
-                                            position: [900, -450],
+                                            position: [900, -390],
                                             scale: [1.4, 1.4],
                                             button: 'button',
                                             childs: [
@@ -342,9 +470,10 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'info content 2',
                                             type: 'text',
-                                            text: 'Only the highest win per bet line is paid. Bet line wins pay if in succession from the leftmost reel to the rightmost reel. \n Malfunction voids all pays and plays. For more information, see the Game Rules.',
+                                            text: '●Only the highest win per bet line is paid.    ●Bet line wins pay if in succession from the leftmost reel to the rightmost reel. \n  ●Malfunction voids all pays and plays. ●For more information, see the Game Rules.',
                                             position: [0, 280],
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Bold',
                                                 align: 'center',
                                                 fill: 0x005daa,
                                                 fontSize: '20px'
@@ -370,37 +499,37 @@ App.Gameplay = new Screen({
                                                 {
                                                     name: 'info container1 dazzling',
                                                     type: 'sprite',
-                                                    scale: 0.8,
                                                     image: 'dazzlingAni-00.png',
-                                                    position: [-150, 0],
+                                                    position: [-120, 10],
                                                 },
                                             ]
                                         },
                                         {
                                             name: 'info content 11',
                                             type: 'text',
-                                            position: [200, -320],
+                                            position: [300, -300],
                                             scale: [1, 1],
                                             text: 'DAZZLING WILD REELS',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Black',
                                                 align: 'center',
                                                 fill: 0x005daa,
-                                                fontSize: '50px',
+                                                fontSize: '60px',
                                                 fontWeight: 600
                                             }
                                         },
                                         {
                                             name: 'info content 12',
                                             type: 'text',
-                                            position: [260, -80],
+                                            position: [330, -130],
                                             scale: [1, 1.1],
                                             text: 'Dazzling Wild Reels randomly appear during the main game as \nan overlay reel with only Wild symbols. \n\n1-5 reels can turn into Dazzling Wild Reels. \n\n Wild Symbols substitute for all symbols except for Free Spin \nsymbols.',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Bold',
                                                 align: 'left',
                                                 fill: 0x005daa,
                                                 fontSize: '25px',
                                                 fontWeight: 500,
-                                                fontFamily: 'Arial'
                                             }
                                         },
                                     ]
@@ -410,8 +539,7 @@ App.Gameplay = new Screen({
                                     childs: [
                                         {
                                             name: 'container2 background',
-                                            position: [0, 0],
-                                            scale: [1.5, 1.5],
+                                            position: [-290, -60],
                                             childs: [
                                                 {
                                                     type: 'sprite',
@@ -424,23 +552,23 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'info content 21',
                                             type: 'text',
-                                            position: [200, -320],
-                                            scale: [1, 1],
+                                            position: [-200, -300],
                                             text: 'FREE SPINS',
                                             styles: {
-                                                align: 'left',
+                                                fontFamily: 'PFDinDisplayPro-Black',
+                                                align: 'center',
                                                 fill: 0x005daa,
-                                                fontSize: '50px',
+                                                fontSize: '60px',
                                                 fontWeight: 600
                                             }
                                         },
                                         {
                                             name: 'info content 22',
                                             type: 'text',
-                                            position: [230, -180],
-                                            scale: [1, 1.1],
-                                            text: '3 or more Free Spin symbols appearing anywhere on the \nreels in the main game activates Free Spins.',
+                                            position: [120, -220],
+                                            text: '3 or more Free Spin symbols appearing anywhere on the reels in the main game activates\n Free Spins.',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Bold',
                                                 align: 'left',
                                                 fill: 0x005daa,
                                                 fontSize: '25px',
@@ -450,10 +578,10 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'info content 99',
                                             type: 'text',
-                                            position: [200, 0],
-                                            scale: [1, 1.1],
+                                            position: [-80, -80],
                                             text: '3 Free Spin symbols = 8 Free Spins \n\n4 Free Spin symbols = 12 Free Spins \n\n5 Free Spin symbols = 16 Free Spins',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Bold',
                                                 align: 'left',
                                                 fill: 0x005daa,
                                                 fontSize: '35px',
@@ -468,7 +596,7 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'container3 background',
                                             position: [0, 0],
-                                            scale: [1.5, 1.5],
+                                            scale: 1.7,
                                             childs: [
                                                 {
                                                     name: 'info container3 mark',
@@ -482,20 +610,21 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'info content 31',
                                             type: 'text',
-                                            position: [200, -320],
+                                            position: [50, -320],
                                             scale: [1, 1],
                                             text: 'LINKED REELS',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Black',
                                                 align: 'center',
                                                 fill: 0x005daa,
-                                                fontSize: '50px',
+                                                fontSize: '60px',
                                                 fontWeight: 600
                                             }
                                         },
                                         {
                                             name: 'info content 32',
                                             type: 'text',
-                                            position: [260, -80],
+                                            position: [250, -150],
                                             scale: [1, 1.1],
                                             text: 'The Linked Reels feature appears during Free Spins only. \n\nAt the beginning of each spin, identifical linked reels appear adjacently \non any of reels 1-4\n\nThe right reel is a copy of the left reel, with reel 1 linked to reel 2 \nand/or reel3 linked to reel4.',
                                             styles: {
@@ -503,7 +632,7 @@ App.Gameplay = new Screen({
                                                 fill: 0x005daa,
                                                 fontSize: '25px',
                                                 fontWeight: 500,
-                                                fontFamily: 'Arial'
+                                                fontFamily: 'PFDinDisplayPro-Black',
                                             }
                                         },
                                     ]
@@ -514,487 +643,22 @@ App.Gameplay = new Screen({
                                         {
                                             name: 'info content 51',
                                             type: 'text',
-                                            position: [0, -350],
+                                            position: [0, -380],
                                             scale: [1.0, 1],
                                             text: 'SYMBOL PAYOUT VALUES',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Black',
                                                 align: 'center',
                                                 fill: 0x005daa,
                                                 fontSize: '40px',
                                                 fontWeight: 600
                                             }
                                         },
-                                        {   name: 'symbols background',
+                                        {
                                             type: 'sprite',
-                                            image: 'info_symbol_bg.png',
-                                            scale : [1.3, 1.5],
-                                            position: [0, 0]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM0.png',
-                                            position: [-580-145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '400',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '80',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '40',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '2',
-                                                    position: [-30, 290],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '3',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                            ]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM1.png',
-                                            position: [-290-145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '250',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '65',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '20',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                            ]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM2.png',
-                                            position: [0-145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '200',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '60',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '15',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                            ]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM3.png',
-                                            position: [0+145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '150',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '50',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '15',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                            ]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM4.png',
-                                            position: [290+145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '100',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '45',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '15',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {   name: 'symbol_bar3',
-                                            type: 'sprite',
-                                            image: 'SYM5.png',
-                                            position: [290*2+145, -220],
-                                            scale: [1.4, 1.4],
-                                            childs: [
-                                                {
-                                                    type: 'text',
-                                                    text: '5',
-                                                    position: [-30, 140],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '100',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '4',
-                                                    position: [-30, 190],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '45',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'text',
-                                                    text: '3',
-                                                    position: [-30, 240],
-                                                    styles: {
-                                                        fill: 0x005daa,
-                                                        fontSize: '40px',
-                                                        fontWeight: 600
-                                                    },
-                                                    childs: [
-                                                        {
-                                                            type: 'text',
-                                                            text: '15',
-                                                            position: [70, 0],
-                                                            styles: {
-                                                                fill: 0x752154,
-                                                                fontSize: '40px',
-                                                                fontWeight: 600
-                                                            },
-                                                        }
-                                                    ]
-                                                }
-                                            ]
+                                            image: 'help4',
+                                            scale: 1.1,
+                                            position: [0, -110]
                                         }
                                     ]
                                 },
@@ -1008,6 +672,7 @@ App.Gameplay = new Screen({
                                             scale: [1.0, 1.0],
                                             text: 'WINNING BET LINES',
                                             styles: {
+                                                fontFamily: 'PFDinDisplayPro-Black',
                                                 align: 'center',
                                                 fill: 0x005daa,
                                                 fontSize: '40px',
@@ -1029,19 +694,8 @@ App.Gameplay = new Screen({
                 },
                 {   name: 'ControlPanelContainer', visible: true,
                     childs: [
-                        /*{
-                            name: "spine1",
-                            type: "spine",
-                            spineData: "char4-data",
-                            spineAtlas: "texture",
-                            spineAtlasFolder: "char4/",
-                            anchor: [.5, 1],
-                            position: [0, 50],
-                            visible: true
-                        },*/
                         {
                             name: 'control panel container wrapper',
-                            scale: [1, 1],
                             position: [0, 404],
                             childs: [
                                 {   name: 'control panel bg',
@@ -1109,6 +763,8 @@ App.Gameplay = new Screen({
                                                     type: 'text',
                                                     text: "MAX\nBET",
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Black',
                                                         fill: 0xffffff,
                                                         fontSize: '18px',
                                                         fontWeight: '700',
@@ -1149,6 +805,8 @@ App.Gameplay = new Screen({
                                                     type: 'text',
                                                     text: "AUTO\nPLAY",
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Black',
                                                         fill: 0xffffff,
                                                         fontSize: '18px',
                                                         fontWeight: '700'
@@ -1196,8 +854,10 @@ App.Gameplay = new Screen({
                                                     text: '1',
                                                     position: [0, 0],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
+                                                        fontSize: '40px',
                                                         dropShadow: true,
                                                         dropShadowAngle: 0.5,
                                                         dropShadowColor: 0x875f3a,
@@ -1210,11 +870,13 @@ App.Gameplay = new Screen({
                                                     name: 'coin bar label',
                                                     type: 'text',
                                                     text: 'COIN VALUE',
-                                                    position: [0, -40],
+                                                    position: [0, -44],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
+                                                        fontWeight: 200,
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
-                                                        fontWeight: 700
+                                                        fontSize: '28px',
                                                     }
                                                 },
                                                 {
@@ -1288,23 +950,20 @@ App.Gameplay = new Screen({
                                                         },
                                                         {
                                                             name: 'coin progress back',
-                                                            type: 'graphics',
-                                                            position: [-140, -37],
+                                                            type: 'sprite',
+                                                            position: [-140, -30],
+                                                            scale: 1.5,
                                                             mask: 'coin progress mask',
-                                                            alpha: 1,
-                                                            draw: [
-                                                                ['beginFill', [0x82be00]],
-                                                                ['drawRect', [-140 / 2, 5 / 2, 140, 5]]
-                                                            ],
+                                                            image: 'selectorBarFillBack',
                                                         },
                                                         {
                                                             name: 'coin progress mask',
                                                             type: 'graphics',
-                                                            position: [-23, -37],
+                                                            position: [-23, -39],
                                                             alpha: 0.8,
                                                             draw: [
                                                                 ['beginFill', [0x000000]],
-                                                                ['drawRect', [-140 / 2, 5 / 2, 140, 5]]
+                                                                ['drawRect', [-140 / 2, 8 / 2, 140, 8]]
                                                             ],
                                                         }
                                                     ]
@@ -1328,8 +987,10 @@ App.Gameplay = new Screen({
                                                     text: '35',
                                                     position: [0, 0],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
+                                                        fontSize: '40px',
                                                         dropShadow: true,
                                                         dropShadowAngle: 0.5,
                                                         dropShadowColor: 0x875f3a,
@@ -1342,11 +1003,13 @@ App.Gameplay = new Screen({
                                                     name: 'level bar label',
                                                     type: 'text',
                                                     text: 'LEVEL',
-                                                    position: [0, -40],
+                                                    position: [0, -44],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
+                                                        fontWeight: 200,
                                                         fill: 0xffffff,
-                                                        fontSize: '25px',
-                                                        fontWeight: 700
+                                                        fontSize: '28px',
                                                     }
                                                 },
                                                 {
@@ -1419,23 +1082,21 @@ App.Gameplay = new Screen({
                                                         },
                                                         {
                                                             name: 'level progress back',
-                                                            type: 'graphics',
-                                                            position: [-140, -37],
+                                                            type: 'sprite',
+                                                            position: [-140, -30],
+                                                            scale: 1.5,
                                                             mask: 'progress mask',
-                                                            alpha: 1,
-                                                            draw: [
-                                                                ['beginFill', [0x82be00]],
-                                                                ['drawRect', [-140 / 2, 5 / 2, 140, 5]]
-                                                            ],
+                                                            image: 'selectorBarFillBack',
+                                                            alpha: 1
                                                         },
                                                         {
                                                             name: 'progress mask',
                                                             type: 'graphics',
-                                                            position: [-23, -37],
+                                                            position: [-23, -39],
                                                             alpha: 0.8,
                                                             draw: [
                                                                 ['beginFill', [0x000000]],
-                                                                ['drawRect', [-140 / 2, 5 / 2, 140, 5]]
+                                                                ['drawRect', [-140 / 2, 8 / 2, 140, 8]]
                                                             ],
                                                         }
                                                     ]
@@ -1455,8 +1116,10 @@ App.Gameplay = new Screen({
                                                     position: [0, 0],
                                                     scale: [1 / 1.3, 1],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
+                                                        fontSize: '40px',
                                                         dropShadow: true,
                                                         dropShadowAngle: 0.5,
                                                         dropShadowColor: 0x875f3a,
@@ -1470,11 +1133,13 @@ App.Gameplay = new Screen({
                                                     type: 'text',
                                                     text: 'BET',
                                                     scale: [1 / 1.3, 1],
-                                                    position: [0, -40],
+                                                    position: [0, -44],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
+                                                        fontWeight: 200,
                                                         fill: 0xffffff,
-                                                        fontSize: '25px',
-                                                        fontWeight: 700
+                                                        fontSize: '28px',
                                                     }
                                                 }
                                             ]
@@ -1492,8 +1157,10 @@ App.Gameplay = new Screen({
                                                     position: [0, 0],
                                                     scale: [1 / 1.5, 1],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
+                                                        fontSize: '40px',
                                                         dropShadow: true,
                                                         dropShadowAngle: 0.5,
                                                         dropShadowColor: 0x875f3a,
@@ -1507,201 +1174,17 @@ App.Gameplay = new Screen({
                                                     type: 'text',
                                                     text: 'COINS',
                                                     scale: [1 / 1.5, 1],
-                                                    position: [0, -40],
+                                                    position: [0, -44],
                                                     styles: {
+                                                        align: 'center',
+                                                        fontFamily: 'PFDinDisplayPro-Bold',
+                                                        fontWeight: 200,
                                                         fill: 0xffffff,
-                                                        fontSize: '23px',
-                                                        fontWeight: 700
+                                                        fontSize: '28px',
                                                     }
                                                 }
                                             ]
                                         },
-                                        {   name: 'control bottom background', // width 1650
-                                            type: 'graphics',
-                                            position: [0, 114],
-                                            draw: [['beginFill', 0x131313], ['drawRect', [-1920 / 2, -44 / 2, 1920, 44]]],
-                                            childs: [
-                                                {
-                                                    name: 'bottom background top',
-                                                    type: 'graphics',
-                                                    position: [0, -21],
-                                                    draw: [['beginFill', 0x322c33], ['drawRect', [-1920 / 2, -2 / 2, 1920, 2]]],
-                                                },
-                                                {
-                                                    name: 'btn_setting',
-                                                    type: 'sprite',
-                                                    scale: [1.5, 1.6],
-                                                    position: [-1650 / 2 + 20, 0],
-                                                    image: 'btn_setting'
-                                                },
-                                                {
-                                                    name: 'btn_speaker',
-                                                    type: 'sprite',
-                                                    scale: [1.5, 1.6],
-                                                    position: [-1650 / 2 + 20 + 50, 0],
-                                                    image: 'btn_speaker'
-                                                },
-                                                {
-                                                    name: 'audio_set button',
-                                                    type: 'sprite',
-                                                    image: 'btn_speaker_on',
-                                                    button: 'button',
-                                                    scale: [1.5, 1.6],
-                                                    position: [-1650 / 2 + 20 + 50, 0],
-                                                    childs: [
-                                                        {
-                                                            name: 'audio_set button glow',
-                                                            type: 'graphics'
-                                                        },
-                                                    ]
-                                                },
-                                                {
-                                                    name: 'btn_auto',
-                                                    type: 'sprite',
-                                                    scale: [1.5, 1.6],
-                                                    position: [-1650 / 2 + 20 + 50 + 70, 0],
-                                                    image: 'btn_auto',
-                                                    button: 'button',
-                                                    childs: [
-                                                        {
-                                                            name: 'btn_auto glow',
-                                                            type: 'sprite',
-                                                            image: 'btn_autoGlow.png',
-                                                            alpha: 0
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    name: 'autoamount text',
-                                                    type: 'text',
-                                                    text: '100',
-                                                    visible: false,
-                                                    position: [-1650 / 2 + 20 + 50 + 70 + 60, 0],
-                                                    styles: {
-                                                        fill: 0xffffff,
-                                                        fontFamily: 'Arial',
-                                                        fontSize: '20px'
-                                                    }
-                                                },
-                                                {
-                                                    name: 'btn_question',
-                                                    type: 'sprite',
-                                                    scale: [1.5, 1.6],
-                                                    position: [-1650 / 2 + 20 + 50 + 70 + 100, 0],
-                                                    image: 'btn_question'
-                                                },
-                                                {
-                                                    name: 'timer',
-                                                    position: [1650 / 2 - 50 - 100, 0],
-                                                    childs: [
-                                                        {
-                                                            name: 'timer hour',
-                                                            position: [-20, 0],
-                                                            type: 'text',
-                                                            text: '05',
-                                                            styles: {
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        },
-                                                        {
-                                                            name: 'timer symbol',
-                                                            position: [0, -2],
-                                                            type: 'text',
-                                                            text: ':',
-                                                            visible: true,
-                                                            styles: {
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        },
-                                                        {
-                                                            name: 'timer minute',
-                                                            position: [20, 0],
-                                                            type: 'text',
-                                                            text: '05',
-                                                            styles: {
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        },
-                                                    ]
-                                                },
-                                                {
-                                                    name: 'logo',
-                                                    type: 'text',
-                                                    text: 'NET|ENT',
-                                                    position: [1650 / 2 - 50, 0],
-                                                    styles: {
-                                                        fontFamily: 'AGLettericaDemiCondensedC',
-                                                        fontSize: '22px',
-                                                        fill: 0x5b5b5b,
-                                                    }
-                                                },
-                                                {
-                                                    name: 'credits bar',
-                                                    type: 'text',
-                                                    position: [-200, 0],
-                                                    childs: [
-                                                        {
-                                                            name: 'credits bar label',
-                                                            type: 'text',
-                                                            text: 'Cash: ',
-                                                            position: [0, 0],
-                                                            styles: {
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        },
-                                                        {
-                                                            name: 'credits bar text',
-                                                            type: 'text',
-                                                            text: '50000$',
-                                                            position: [75, 0],
-                                                            styles: {
-                                                                align: 'right',
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    name: 'bet bar',
-                                                    position: [0, 0],
-                                                    childs: [
-                                                        {
-                                                            name: 'bet bar label',
-                                                            type: 'text',
-                                                            text: 'Bet: ',
-                                                            styles: {
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        },
-                                                        {
-                                                            name: 'bet bar text',
-                                                            type: 'text',
-                                                            text: '0.10',
-                                                            position: [50, 0],
-                                                            styles: {
-                                                                align: 'left',
-                                                                fontFamily: 'Arial',
-                                                                fontSize: '22px',
-                                                                fill: 0xffffff,
-                                                            },
-                                                        }
-                                                    ]
-                                                },
-
-                                            ]
-                                        }
                                     ]
                                 },
                                 {   name: 'win bar',
@@ -1723,27 +1206,13 @@ App.Gameplay = new Screen({
                                         },
 
                                         {   name: 'win bar text',
-                                            type: 'text',
+                                            type: 'bitmap-text',
                                             text: '100',
                                             styles: {
-                                                align: 'center',
-                                                fontStyle: 'italic',
-                                                fontWeight: '10',
-                                                fontSize: '200px',
-                                                padding: 30,
-                                                fontFamily: 'BerlinSansFBDemi-Bold', //'Oswald-Bold',
-                                                fill: [0xffffff,0xfffdd3, 0xc54700, 0xf9ca00],
-                                                fillGradientStops: [0.55, 0.35, 0.25],
-                                                stroke: [0xef4e4e],
-                                                strokeGradientStops: [0.55],
-                                                strokeThickness: 25,
-                                                dropShadow: true,
-                                                dropShadowBlur: 25,
-                                                dropShadowAlpha: 1,
-                                                dropShadowColor: 0x581d00,
-                                                dropShadowDistance: 20,
-                                                letterSpacing: 20,
-                                                lineJoin: "bevel",
+                                                font: {
+                                                    name: 'font',
+                                                    size: 70
+                                                }
                                             }
                                         },
                                         {   name: 'win bar glow',
@@ -1753,6 +1222,330 @@ App.Gameplay = new Screen({
                                         },
                                     ]
                                 }
+                            ]
+                        },
+                        {
+                            name: 'freespin control panel container wrapper',
+                            visible: false,
+                            position: [0, 450],
+                            childs: [
+                                {
+                                    type: 'graphics',
+                                    alpha: 0.3,
+                                    draw: [
+                                        ['beginFill', 0x000000],
+                                        ['drawRect', [-1920 / 2, -120 / 2, 1920, 120]]
+                                    ]
+                                },
+                                {
+                                    name: 'freespin Count text',
+                                    type: 'text',
+                                    text: '7 FREE SPINS',
+                                    styles: {
+                                        fontSize: '70px',
+                                        fill: 0xffffff,
+                                        fontFamily: 'PFDinDisplayPro-Black'
+                                    }
+                                },
+                                {
+                                    position: [-600, -40],
+                                    childs: [
+                                        {
+                                            type: 'text',
+                                            text: 'BET',
+                                            styles: {
+                                                align: 'right',
+                                                fontSize: '40px',
+                                                fill: 0xffffff,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        },
+                                        {
+                                            name: 'freespin bet value',
+                                            type: 'text',
+                                            text: '40',
+                                            position: [90, 0],
+                                            styles: {
+                                                align: 'left',
+                                                fontSize: '40px',
+                                                fill: 0xffff2b,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    position: [-600, 10],
+                                    childs: [
+                                        {
+                                            type: 'text',
+                                            text: 'LEVEL',
+                                            position: [-25, 0],
+                                            styles: {
+                                                align: 'right',
+                                                fontSize: '40px',
+                                                fill: 0xffffff,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        },
+                                        {
+                                            name: 'freespin level value',
+                                            type: 'text',
+                                            text: '2',
+                                            position: [90, 0],
+                                            styles: {
+                                                align: 'right',
+                                                wordWrap: true,
+                                                fontSize: '40px',
+                                                fill: 0xffff2b,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    position: [600, -40],
+                                    childs: [
+                                        {
+                                            type: 'text',
+                                            text: 'COIN VALUE',
+                                            position: [-80, 0],
+                                            styles: {
+                                                align: 'right',
+                                                fontSize: '40px',
+                                                fill: 0xffffff,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        },
+                                        {
+                                            name: 'freespin coinvalue value',
+                                            type: 'text',
+                                            text: '40',
+                                            position: [90, 0],
+                                            styles: {
+                                                align: 'left',
+                                                fontSize: '40px',
+                                                fill: 0xffff2b,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    position: [600, 10],
+                                    childs: [
+                                        {
+                                            type: 'text',
+                                            text: 'COINS',
+                                            position: [-25, 0],
+                                            styles: {
+                                                align: 'right',
+                                                fontSize: '40px',
+                                                fill: 0xffffff,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        },
+                                        {
+                                            name: 'freespin coins value',
+                                            type: 'text',
+                                            text: '2',
+                                            position: [90, 0],
+                                            styles: {
+                                                align: 'right',
+                                                wordWrap: true,
+                                                fontSize: '40px',
+                                                fill: 0xffff2b,
+                                                fontFamily: 'PFDinDisplayPro-Black'
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {   name: 'control bottom background', // width 1650
+                            type: 'graphics',
+                            position: [0, 114+404],
+                            draw: [['beginFill', 0x131313], ['drawRect', [-1920 / 2, -44 / 2, 1920, 44]]],
+                            childs: [
+                                {
+                                    name: 'bottom background top',
+                                    type: 'graphics',
+                                    position: [0, -21],
+                                    draw: [['beginFill', 0x322c33], ['drawRect', [-1920 / 2, -2 / 2, 1920, 2]]],
+                                },
+                                {
+                                    name: 'btn_setting',
+                                    type: 'sprite',
+                                    scale: [1.5, 1.6],
+                                    position: [-1650 / 2 + 20, 0],
+                                    image: 'btn_setting'
+                                },
+                                {
+                                    name: 'btn_speaker',
+                                    type: 'sprite',
+                                    scale: [1.5, 1.6],
+                                    position: [-1650 / 2 + 20 + 50, 0],
+                                    image: 'btn_speaker'
+                                },
+                                {
+                                    name: 'audio_set button',
+                                    type: 'sprite',
+                                    image: 'btn_speaker_on',
+                                    button: 'button',
+                                    scale: [1.5, 1.6],
+                                    position: [-1650 / 2 + 20 + 50, 0],
+                                    childs: [
+                                        {
+                                            name: 'audio_set button glow',
+                                            type: 'graphics'
+                                        },
+                                    ]
+                                },
+                                {
+                                    name: 'btn_auto',
+                                    type: 'sprite',
+                                    scale: [1.5, 1.6],
+                                    position: [-1650 / 2 + 20 + 50 + 70, 0],
+                                    image: 'btn_auto',
+                                    button: 'button',
+                                    childs: [
+                                        {
+                                            name: 'btn_auto glow',
+                                            type: 'sprite',
+                                            image: 'btn_autoGlow.png',
+                                            alpha: 0
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'autoamount text',
+                                    type: 'text',
+                                    text: '100',
+                                    visible: false,
+                                    position: [-1650 / 2 + 20 + 50 + 70 + 60, 0],
+                                    styles: {
+                                        fill: 0xffffff,
+                                        fontFamily: 'Arial',
+                                        fontSize: '20px'
+                                    }
+                                },
+                                {
+                                    name: 'btn_question',
+                                    type: 'sprite',
+                                    scale: [1.5, 1.6],
+                                    position: [-1650 / 2 + 20 + 50 + 70 + 100, 0],
+                                    image: 'btn_question'
+                                },
+                                {
+                                    name: 'timer',
+                                    position: [1650 / 2 - 50 - 100, 0],
+                                    childs: [
+                                        {
+                                            name: 'timer hour',
+                                            position: [-20, 0],
+                                            type: 'text',
+                                            text: '05',
+                                            styles: {
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        },
+                                        {
+                                            name: 'timer symbol',
+                                            position: [0, -2],
+                                            type: 'text',
+                                            text: ':',
+                                            visible: true,
+                                            styles: {
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        },
+                                        {
+                                            name: 'timer minute',
+                                            position: [20, 0],
+                                            type: 'text',
+                                            text: '05',
+                                            styles: {
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        },
+                                    ]
+                                },
+                                {
+                                    name: 'logo',
+                                    type: 'text',
+                                    text: 'NET|ENT',
+                                    position: [1650 / 2 - 50, 0],
+                                    styles: {
+                                        fontFamily: 'AGLettericaDemiCondensedC',
+                                        fontSize: '22px',
+                                        fill: 0x5b5b5b,
+                                    }
+                                },
+                                {
+                                    name: 'credits bar',
+                                    type: 'text',
+                                    position: [-200, 0],
+                                    childs: [
+                                        {
+                                            name: 'credits bar label',
+                                            type: 'text',
+                                            text: 'Cash: ',
+                                            position: [0, 0],
+                                            styles: {
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        },
+                                        {
+                                            name: 'credits bar text',
+                                            type: 'text',
+                                            text: '50000$',
+                                            position: [75, 0],
+                                            styles: {
+                                                align: 'right',
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'bet bar',
+                                    position: [0, 0],
+                                    childs: [
+                                        {
+                                            name: 'bet bar label',
+                                            type: 'text',
+                                            text: 'Bet: ',
+                                            styles: {
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        },
+                                        {
+                                            name: 'bet bar text',
+                                            type: 'text',
+                                            text: '0.10',
+                                            position: [50, 0],
+                                            styles: {
+                                                align: 'left',
+                                                fontFamily: 'Arial',
+                                                fontSize: '22px',
+                                                fill: 0xffffff,
+                                            },
+                                        }
+                                    ]
+                                },
+
                             ]
                         }
                     ]
@@ -2142,6 +1935,257 @@ App.Gameplay = new Screen({
                         }
                     ]
                 },
+                {
+                    name: 'FreespinIntroContainer',
+                    visible: false,
+                    scale: [1920 / 1280, 1080 / 720],
+                    childs: [
+                        {
+                            type: 'sprite',
+                            image: 'freespinIntroBackground',
+                            event: 'disabled button'
+                        },
+                        {
+                            name: 'freespin start button',
+                            position: [350, 300],
+                            childs: [
+                                {
+                                    type: 'sprite',
+                                    position: [-133, 0],
+                                    image: 'continueButtonStart'
+                                },
+                                {
+                                    type: 'sprite',
+                                    image: 'continueButtonFill',
+                                    scale: [100, 1]
+                                },
+                                {
+                                    type: 'sprite',
+                                    position: [133, 0],
+                                    image: 'continueButtonEnd'
+                                },
+                                {
+                                    type: 'text',
+                                    text: 'START FREE SPINS',
+                                    styles: {
+                                        fontSize: '30px',
+                                        fontFamily: 'PFDinDisplayPro-Black',
+                                        fill: 0xffffff,
+                                        stroke: 0x7cc909,
+                                        strokeThickness: 6
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            type: 'text',
+                            text: 'CONGRATULATIONS!',
+                            position: [0, -200],
+                            styles: {
+                                fontSize: '80px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowBlur: 10,
+                                dropShadowDistance: 4
+                            }
+                        },
+                        {
+                            type: 'text',
+                            text: 'YOU WON 8 FREE SPINS',
+                            position: [0, -100],
+                            styles: {
+                                fontSize: '65px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowDistance: 4
+                            }
+                        },
+                        {
+                            type: 'text',
+                            text: 'WITH',
+                            position: [0, 0],
+                            styles: {
+                                fontSize: '50px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowDistance: 4
+                            }
+                        },
+                        {
+                            type: 'text',
+                            text: 'LINKED REELS',
+                            position: [0, 100],
+                            styles: {
+                                fontSize: '80px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowBlur: 10,
+                                dropShadowDistance: 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    name: 'FreespinOutroContainer',
+                    visible: false,
+                    scale: [1920 / 1280, 1080 / 720],
+                    childs: [
+                        {
+                            type: 'sprite',
+                            image: 'freespinOutroBackground',
+                            event: 'disabled button'
+                        },
+                        {
+                            position: [350, 300],
+                            childs: [
+                                {
+                                    type: 'sprite',
+                                    position: [-93, 0],
+                                    image: 'continueButtonStart'
+                                },
+                                {
+                                    type: 'sprite',
+                                    image: 'continueButtonFill',
+                                    scale: [60, 1]
+                                },
+                                {
+                                    type: 'sprite',
+                                    position: [93, 0],
+                                    image: 'continueButtonEnd'
+                                },
+                                {
+                                    type: 'text',
+                                    text: 'CONTINUE',
+                                    styles: {
+                                        fontSize: '30px',
+                                        fontFamily: 'PFDinDisplayPro-Black',
+                                        fill: 0xffffff,
+                                        stroke: 0x7cc909,
+                                        strokeThickness: 6
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            type: 'text',
+                            text: 'CONGRATULATIONS!',
+                            position: [0, -200],
+                            styles: {
+                                fontSize: '80px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowBlur: 10,
+                                dropShadowDistance: 4
+                            }
+                        },
+                        {
+                            type: 'text',
+                            text: 'COINS WON:',
+                            position: [0, -100],
+                            styles: {
+                                fontSize: '65px',
+                                fontFamily: 'PFDinDisplayPro-Black',
+                                fill: 0xffffff,
+                                stroke: 0x05a2dd,
+                                strokeThickness: 8,
+                                dropShadow: true,
+                                lineJoin: "bevel",
+                                dropShadowAngle: 1.3,
+                                dropShadowColor: "#043975",
+                                dropShadowDistance: 4
+                            }
+                        },
+                        {
+                            name: 'freespin total amount text',
+                            type: 'bitmap-text',
+                            text: '1636',
+                            position: [0, 100],
+                            styles: {
+                                font: {
+                                    name: 'font',
+                                    size: 60
+                                }
+                            }
+                        }
+                    ]
+                },
+                {   name: 'LogoContainer', visible:true,
+                    childs: [
+                        {
+                            name: 'logo 3',
+                            position: [-570, -460],
+                            scale: [1.3, 1.3],
+                            visible: true,
+                            childs: [
+                                {   name: 'logo 2',
+                                    type: 'sprite',
+                                    position: [0, 0],
+                                    image: 'logo_2',
+                                    childs: [
+                                        {   name: 'dazzlime',
+                                            type: 'sprite',
+                                            position: [36, 0],
+                                            image: 'dazzlingAni-00.png',
+                                        },
+                                        {   name: 'logo 1',
+                                            type: 'sprite',
+                                            position: [-130, 12],
+                                            image: 'logo_1',
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: 'logo text',
+                            type: 'text',
+                            text: '125',
+                            position: [-550, -400],
+                            visible: false,
+                            styles: {
+                                fill: 0x000000,//0xffffff,
+                                fontFamily: "PFDinDisplayPro-Black",
+                                fontSize: '45px',
+                                dropShadow: true,
+                                dropShadowAngle: 0.5,
+                                dropShadowColor: 0x875f3a,
+                                dropShadowDistance: 1,
+                                dropShadowBlur: 25,
+                                padding: 20
+                            }
+                        }
+                    ]
+                },
                 {   name: 'BonusWinContainer',
                     visible: false,
                     childs: [
@@ -2204,6 +2248,15 @@ App.Gameplay = new Screen({
                         }
                     ]
                 },
+                {
+                    name: 'FlashContainer',
+                    type: 'graphics',
+                    visible: false,
+                    draw: [
+                        ['beginFill', 0xffffff],
+                        ['drawRect', [-1920 / 2, -1080 / 2, 1920, 1080]]
+                    ]
+                }
             ]
         },
         {
@@ -2301,22 +2354,16 @@ App.Gameplay = new Screen({
             //getting init data from server
             if (!this.is_local_mode) {
                 var reg1 = new RegExp("(^|&)" + "game_id" + "=([^&]*)(&|$)", "i");
-                var reg2 = new RegExp("(^|&)" + "key" + "=([^&]*)(&|$)", "i");
+                var reg2 = new RegExp("(^|&)" + "s" + "=([^&]*)(&|$)", "i");
                 var r1 = window.location.search.substr(1).match(reg1);
                 var r2 = window.location.search.substr(1).match(reg2);
-                if (r2 !== null) {
-                    // Global.session_id = r1[2];
-                    localStorage.api_key = r2[2];
-                    // console.log(r2[2])
-                }
-                if (r1 !== null) {
-                    this.session_id = r1[2];
-                    // console.log(this.session_id)
-                } else {
+                if(r1 == null || r2 == null){
                     console.log("no");
                     this.userBlockLayer.active = true;
                     return;
                 }
+                this.game_id = r1[2];
+                this.session_id = r2[2];
             }
             // server end
 
@@ -2577,16 +2624,16 @@ App.Gameplay = new Screen({
                 show: () => {
                     this.flashTweens.showTweens.forEach((tween, index) => {
                         tween.play();
-                        /*var self = this;
+                        /*var this = this;
                         var loop = setInterval(function() {
-                            if(index < self.flashTweens.showTweens.length - 1) {
+                            if(index < this.flashTweens.showTweens.length - 1) {
                                 tween.play();
                             } else {
                                 clearInterval(loop);
                             }
                         }, 0);*/
                         /* setTimeout(function run() {
-                             if(index === self.flashTweens.showTweens.length - 1)
+                             if(index === this.flashTweens.showTweens.length - 1)
                                  return;
                              setTimeout(run, 100);
                          }, 100);*/
@@ -2694,6 +2741,7 @@ App.Gameplay = new Screen({
 
             this.REELS_STOP_TIMEOUT = 1000;
             this.REELS_STOP_DELAY = 300;
+            this.WILD_ANIMATION_DELAY = 0;
 
             this.REELS_START_TIMEOUT = 0;
             this.REELS_START_DELAY = 0;
@@ -2720,6 +2768,15 @@ App.Gameplay = new Screen({
                 [-this.BOARD_SIZE[0] / 2, -this.BOARD_SIZE[1] / 2 + 10, this.BOARD_SIZE[0], this.BOARD_SIZE[1] - 20, 0]
             ];
 
+            let wildSymbolBackFrame = [];
+            let wildSymbolFrames = [];
+            for(let i = 1; i <= 60; i++) {
+                wildSymbolBackFrame.push(`wildSymbolSprite_${i}.png`);
+            }
+            for(let i = 0; i < 29; i++) {
+                wildSymbolFrames.push(`dazzlingAni-${i < 10 ? '0' + i : i}.png`);
+            }
+
             for (let i = 0; i < this.COLUMNS_COUNT; i++) {
 
                 let mostLeft = -1 * (this.COLUMNS_COUNT - 1) / 2 * this.COLUMNS_OFFSET - 2; // the most left element on game board
@@ -2745,6 +2802,18 @@ App.Gameplay = new Screen({
                         mask: 'reel mask ' + i,
                         position: [mostLeft + this.COLUMNS_OFFSET * i, -1 * (this.ROWS_COUNT - 1) / 2 * this.ROWS_OFFSET - (this.ROWS_COUNT + 1) * this.ROWS_OFFSET + reel_pos_data[i][4]]
                     });
+                this.buildChild(this['game board symbols wilds container'], {
+                    name: `reel wilds ${i}`,
+                    mask: 'reel mask ' + i,
+                    position: [mostLeft + this.COLUMNS_OFFSET * i, -1 * (this.ROWS_COUNT - 1) / 2 * this.ROWS_OFFSET - (this.ROWS_COUNT + 1) * this.ROWS_OFFSET + reel_pos_data[i][4]]
+                });
+
+                let reelSpriteBack = this.buildChild(this['game board symbols back container'],
+                    {
+                        name: 'reel flashBack ' + i,
+                        position: [mostLeft + this.COLUMNS_OFFSET * i, -1 * (this.ROWS_COUNT - 1) / 2 * this.ROWS_OFFSET - (this.ROWS_COUNT + 1) * this.ROWS_OFFSET + reel_pos_data[i][4]]
+                    });
+
                 let reelSpriteFlash = this.buildChild(this['game board symbols flash container'],
                     {
                         name: 'reel flash ' + i,
@@ -2782,8 +2851,20 @@ App.Gameplay = new Screen({
                         position: [0, this.ROWS_OFFSET * j]
                     });
 
+                    this.buildChild(this[`reel wilds ${i}`], {
+                        name: `reel ${i} symbol ${j} wild container`,
+                        scale: [1.5, 1.51],
+                        position: [0, this.ROWS_OFFSET * j]
+                    });
+
                     this.buildChild(this['reel flash ' + i], {
                         name: 'reel ' + i + ' symbol flash container ' + j,
+                        scale: [this.SYMBOLS_SCALE+0.2, this.SYMBOLS_SCALE + 0.3],
+                        position: [0, this.ROWS_OFFSET * j]
+                    });
+
+                    this.buildChild(this['reel flashBack ' + i], {
+                        name: 'reel ' + i + ' symbol flashBack container ' + j,
                         scale: [this.SYMBOLS_SCALE+0.2, this.SYMBOLS_SCALE + 0.3],
                         position: [0, this.ROWS_OFFSET * j]
                     });
@@ -2809,10 +2890,46 @@ App.Gameplay = new Screen({
                         visible: false
                     });
 
+                    this.buildChild(this[`reel ${i} symbol ${j} wild container`], {
+                        name: `reel ${i} wildsymbol back ${j}`,
+                        type: 'movie-clip',
+                        frames: wildSymbolBackFrame,
+                        speed: 0.2,
+                        loop: true,
+                        visible: false,
+                    });
+
+                    this.buildChild(this[`reel ${i} symbol ${j} wild container`], {
+                        name: `reel ${i} wildsymbol ${j}`,
+                        type: 'movie-clip',
+                        frames: wildSymbolFrames,
+                        speed: 0.2,
+                        loop: true,
+                        visible: false,
+                    });
+
+                    this.buildChild(this[`reel ${i} symbol ${j} wild container`], {
+                        name: `reel ${i} wildsymbol ${j} label`,
+                        type: 'sprite',
+                        image: 'wildcardlabel',
+                        visible: false,
+                    });
+
                     this.buildChild(this['reel ' + i + ' symbol flash container ' + j], {
                         name: 'reel ' + i + ' symbol ' + j + ' flash',
                         type: 'sprite',
                         visible: false
+                    });
+
+                    this.buildChild(this['reel ' + i + ' symbol flashBack container ' + j], {
+                        name: 'reel ' + i + ' symbol ' + j + ' flashBack',
+                        type: 'movie-clip',
+                        frames: [
+                            'highlight_1-00.png', 'highlight_1-01.png', 'highlight_1-02.png', 'highlight_1-03.png',
+                            'highlight_1-04.png', 'highlight_1-05.png', 'highlight_1-06.png', 'highlight_1-07.png'
+                        ],
+                        visible: false,
+                        speed: 0.2,
                     });
 
                     this.buildChild(this['reel ' + i + ' symbol container ' + j], {
@@ -2846,7 +2963,7 @@ App.Gameplay = new Screen({
             this.refreshLevelBar(1);
             this.refreshCoinBar(1);
 
-            this['status text'].text = 'win on up to 76 bet lines';
+            this['status text'].text = 'Win on up to 76 bet lines';
             // this.updateTickerText();
 
         },
@@ -3103,6 +3220,10 @@ App.Gameplay = new Screen({
             this['overlay'].visible = false;
         },
 
+        'Gameplay disabled button down': (container, e) => {
+            return;
+        },
+
         'Gameplay button over': function (container, e) {
             this.handleButtonOver(container, e);
         },
@@ -3209,14 +3330,14 @@ App.Gameplay = new Screen({
 
         this.tween({
             set:['x', 350],
-            to: ['x', -500, 7000],
+            to: ['x', -1000, 30000],
             next: ['update', () => {
                     switch(this['status text'].text) {
-                        case 'win on up to 76 bet lines':
+                        case 'Win on up to 76 bet lines':
                             this['status text'].text = '3 or more Free spin symbols activate Free spins';
                             break;
                         case '3 or more Free spin symbols activate Free spins':
-                            this['status text'].text = 'win on up to 76 bet lines';
+                            this['status text'].text = 'Win on up to 76 bet lines';
                             break;
                         default:
                             break;
@@ -3239,19 +3360,18 @@ App.Gameplay = new Screen({
     },
 
     spin: function () {
-
         this.winAnimationMode = false;
         this.is_bonus = false;
-        // this.hideLinecontainer();
-        /*if (this.winSound !== null) {
-            this.playSound('reelSpin', {}, {
-                volume: this.sound_mode ? 0.5 : 0,
-                loop: true
-            }, sound => {
-                this.winSound = sound;
-            });
-        }*/
-
+        this.scatter_count = 0;
+        this.returnToOrginalFromHelp();
+        this.linkReel = -1;
+        if(this.wildReel !== -1 && this.wildReel !== undefined){
+            for(let i = 0; i < this.REEL_SYMBOLS_COUNT; i++) {
+                this[`reel ${this.wildReel - 1} wildsymbol ${i}`].visible = false;
+                this[`reel ${this.wildReel - 1} wildsymbol back ${i}`].visible = false;
+            }
+        }
+        this.wildReel = -1;
         if (this.credits.value - this.bet.amount >= 0) {
             if (this.isfreespin === false) {
                 this.credits.value -= this.bet.amount;
@@ -3261,8 +3381,6 @@ App.Gameplay = new Screen({
                 this['win bar'].drawed = 0;
 
                 this.refreshPanelValues();
-
-                this.creditsNotInc = true;
             }
         } else {
             this.setStatusControlBar(['auto start button'], this.const.STATUS_TYPE.NORMAL);
@@ -3270,6 +3388,7 @@ App.Gameplay = new Screen({
             this.current_auto_amount = 0;
             return;
         }
+        this['freespin status win amount text'].text = 0;
 
         this.first_reel = false;
         this.second_reel = false;
@@ -3279,6 +3398,12 @@ App.Gameplay = new Screen({
         this.setStatusControlBar(['auto start button'], this.const.STATUS_TYPE.NORMAL);
         this['coin bar progress'].alpha = 0.5;
         this['level bar progress'].alpha = 0.5;
+
+        if(this.isfreespin && ((this.freespin_count - 1) === this.freespin_index)) {
+            // this['spin button text1'].visible = false;
+            // this['spin button'].texture = this.getTexture("Spin_Button");
+            this.freespinEnd = true;
+        }
 
         if (this.winSound) {
 
@@ -3294,8 +3419,6 @@ App.Gameplay = new Screen({
         this.state = 'spin';
 
         this.hideWinanimation();
-
-        var self = this;
 
         this.spinCombination = null;
 
@@ -3317,28 +3440,28 @@ App.Gameplay = new Screen({
             this.refreshPanelValues();
         }
 
-        if (this.isfreespin === true) {
-            this.freespin_count--;
-        }
+        // if (this.isfreespin === true) {
+        //     this.freespin_count--;
+        // }
 
-        $.when((this.is_local_mode ? this.getServerData() : this.getServerCardsInfo(this.bet.step, this.isfreespin))).done(function (response) {
+        $.when((this.is_local_mode ? this.getServerData() : this.getServerCardsInfo(this.bet.step, this.isfreespin))).done((response) => {
             var receivedData = response;
-            var serverData = self.formatServerData(receivedData);
+            var serverData = this.formatServerData(receivedData);
             console.log(response);
-            if (serverData.error === "0") {
+            if (serverData.error == "0") {
 
-                self.credits.value = serverData.response.balance;
-                self.server_initMatrix = serverData.response.initCards;
+                this.credits.value = serverData.response.balance;
+                this.server_initMatrix = serverData.response.initCards;
 
-                self.spinCombination = null;
+                this.spinCombination = null;
 
-                self.spinCombination = App.escalibur.mathFromServer(self.bet.amount, self.server_initMatrix);
+                this.spinCombination = App.escalibur.mathFromServer(this.bet.amount, this.server_initMatrix);
 
                 var arrRetval = serverData.response.arrRetVal;
                 var newArrRetval = [];
-                self.win_anim_mode = 0;
-                self.server_win_amount.value = serverData.response.winAmount;
-                self.credits = {
+                this.win_anim_mode = 0;
+                this.server_win_amount.value = serverData.response.winAmount;
+                this.credits = {
                     value: serverData.response.balance,
                     drawed: serverData.response.balance
                 };
@@ -3348,46 +3471,68 @@ App.Gameplay = new Screen({
                     }
 
                     if (arrRetval[i].retType === 5) {
-                        self.win_anim_mode = self.win_anim_mode | self.const.RESULT_TYPE.JACKPOT;
-                        //jackpot
-                    }
-
-                    if (arrRetval[i].retType === 6) {
-                        //bigmoney
-                        self.win_anim_mode = self.win_anim_mode | self.const.RESULT_TYPE.BIGMONEY;
-                    }
-
-                    if (arrRetval[i].retType === 7) {
-                        self.wildReelArray = arrRetval[i].wildReelAry;
-                        self.freespin_count = 1;
+                        this.linkedAnimation = true;
+                        this.linkReel = arrRetval[i].linkReel;
                     }
 
                     //In bonus case
+                    if (arrRetval[i].retType === 1) {
+                        let scatter = arrRetval[i];
+                        if(scatter.arrMatchedCardsXPos.length > 2) {
+                            this.freespin_count = scatter.count;
+                            this.total_freespin_amount = 0;
+                            this.isfreespin = this.freespin_count > 0;
+                            this.freespin_index = 0;
+                            this.isfreespinStart = true;
+                            this.spinCombination.winData.winScatters = [];
+                        }/*
+                        this.isfreespin = true;
+                        this.auto_mode = false;
+                        this.freespin_animation = true;
+                        this.freespin_count = arrRetval[i].count;
+                        this.freespin_first_animation = true;*/
+                    }
+
                     if (arrRetval[i].retType === 2) {
-                        self.isfreespin = true;
-                        self.auto_mode = false;
-                        self.freespin_animation = true;
-                        self.freespin_count = arrRetval[i].count;
-                        self.freespin_first_animation = true;
+                        this.wildAnimationStart = true;
+                        this.wildReel = arrRetval[i].wildReel + 1;
+                        this.WILD_ANIMATION_DELAY = 6000;
+                        setTimeout(() => {
+                            this.wildAnimation(this.wildReel);
+                        }, 2000);
+                    }
+
+                    if (arrRetval[i].retType === 7) {
+                        this.wildReelArray = arrRetval[i].wildReelAry;
+                        this.freespin_count = 1;
                     }
                 }
 
-                if (self.freespin_first_animation === true)
-                    self.freespin_first_animation = false;
-                self.server_arrRetVal = newArrRetval;
+                // if (this.freespin_first_animation === true)
+                //     this.freespin_first_animation = false;
+                this.server_arrRetVal = newArrRetval;
 
                 if (arrRetval.length !== 0) {
                     if (arrRetval[0].retType === 3) {
                         // In Case Jackpot
-                        self.is_bonus = true;
-                        self.bonus_amount = parseInt(arrRetval[0].win);
-                        self.server_win_amount.value = parseInt(arrRetval[0].win);
+                        this.is_bonus = true;
+                        this.bonus_amount = parseInt(arrRetval[0].win);
+                        this.server_win_amount.value = parseInt(arrRetval[0].win);
                     } else if (arrRetval[0].retType === 0) {
                         // In Case NORMAL
-                        self.is_bonus = false;
-                        self.spinCombination.winData.winLines = self.generateWinData();
+                        this.is_bonus = false;
+                        this.spinCombination.winData.winLines = this.generateWinData();
+                        console.log(this.spinCombination.winData.winLines);
                     } else if (arrRetval[0].retType === 1) {
 
+                    }
+                }
+
+                if(this.isfreespin === true && this.isfreespinStart === false) {
+                    if(this.freespin_count !== this.freespin_index) {
+                        this.total_freespin_amount += serverData.response.winAmount;
+                        this.freespin_index ++;
+                        this['freespin Count text'].text = `${this.freespin_count - this.freespin_index} FREE SPINS`;
                     }
                 }
             } else {
@@ -3430,9 +3575,29 @@ App.Gameplay = new Screen({
 
                         this.timeout(() => {
 
-                            this.stopReel(i);
+                            if(i > 1 && this.scatter_count === 2 && this.isfreespin === false) {
+                                setTimeout(() => {
+                                    this.reelBackLoopAnimation(i);
+                                    setTimeout(() => {
+                                        this.stopReel(i);
+                                    }, 1500 * (this.first_reel + i - 4));
+                                }, 1500 * (i - this.first_reel - 1));
+                            } else if(this.isfreespin === true){
+                                if(this.linkedAnimation === true){
+                                    this.reelLinkAnimation(this.linkReel);
+                                } /*else {
+                                    setTimeout(() => {
+                                        this.stopReel(i);
+                                    }, 600);
+                                }*/
+                                setTimeout(() => {
+                                    this.stopReel(i);
+                                }, 600);
+                            } else {
+                                this.stopReel(i);
+                            }
 
-                        }, this.REELS_STOP_TIMEOUT + i * this.REELS_STOP_DELAY);
+                        }, this.REELS_STOP_TIMEOUT + i * this.REELS_STOP_DELAY + this.WILD_ANIMATION_DELAY);
 
                     }
 
@@ -3491,6 +3656,19 @@ App.Gameplay = new Screen({
 
             } else {
                 imageName = this.spinCombination.symbols[i][reel];
+
+                // console.log(this.spinCombination.symbols);
+                // console.log(imageName);
+                if(imageName === 'freespin') {
+                    this.scatter_count++;
+                    if(this.scatter_count === 2) {
+                        this.first_reel = reel;
+                    }/*
+                    if(this.scatter_count > 2) {
+                        this.isfreespin = true;
+                        this.total_freespin_amount = 0;
+                    }*/
+                }
 
                 this.setSymbolTexture(this.reels[reel].sprite.children[i].name, App.SymbolsNames[imageName],this.spinCombination.winData.winLines.length > 1);
 
@@ -3646,13 +3824,49 @@ App.Gameplay = new Screen({
         this['coin bar progress'].alpha = 1;
         this['level bar progress'].alpha = 1;
 
+        this.hideReelLinkAnimation();
+        this.stopWildCard(this.wildReel);
 
-        if (this.wildReelArray && this.isfreespin === false) {
-            this.wildAnimation(this.wildReelArray);
+        if(this.isfreespin === true && this.isfreespinStart === true) {
+            setTimeout(() => {
+                this.freespinShowingAnimation();
+            }, 1000);
+            this.isfreespinStart = false;
         }
-
-        if (this.isfreespin === true && this.freespin_count === 0) {
+        /*if (this.isfreespin === true && this.freespin_count === 0) {
             this.hideWildanimation();
+        }*/
+        if(this.isfreespin === true && this.freespinEnd === true) {
+            this.startFlashWhite();
+            setTimeout(() => {
+                this['control panel container wrapper'].visible = true;
+                this['StatusBarContainer'].visible = true;
+                this['freespin control panel container wrapper'].visible = false;
+                this['FreespinStatsuBarContainer'].visible = false;
+
+                this['freespin total amount text'].text = this.total_freespin_amount;
+                this['FreespinOutroContainer'].visible = true;
+                this['game background'].texture = this.getTexture("game_background");
+                this.auto_mode = false;
+                this.current_auto_amount = 0;
+                this.isfreespin = false;
+                this.freespinEnd = false;
+                this.total_freespin_amount = 0;
+                this.freespin_index = 0;
+                this.freespin_count = 0;
+                $.when(this.getFreespinResult(this.total_freespin_amount))
+                    .done(response => {
+                        this.credits = {
+                            value: response.response.balance,
+                            drawed: response.response.balance
+                        };
+                        this.refreshPanelValues();
+                        this.sendSignalToSite();
+                    });
+                setTimeout(() => {
+                    this['FreespinOutroContainer'].visible = false;
+                }, 5000);
+            }, 500);
         }
 
         if (this.current_auto_amount === 0 || this.state === 'ready') {
@@ -3679,13 +3893,6 @@ App.Gameplay = new Screen({
                     this.win_sound_play = true;
 
                     this.winAnimationMode = true;
-
-                    if (this.win_anim_mode && this.const.RESULT_TYPE.BIGMONEY) {
-                        // this.startBigMoneyAnimation();
-                    }
-                    if (this.win_anim_mode && this.const.RESULT_TYPE.JACKPOT) {
-                        // this.startJackpotAnimation();
-                    }
 
                     for(let i = 0; i < this.spinCombination.winData.winLines.length; i++) {
                         this['PayLineAmount-' + this.spinCombination.winData.winLines[i][4]].text = this.spinCombination.winData.winLines[i][5];
@@ -3734,7 +3941,7 @@ App.Gameplay = new Screen({
                         }, 3000);
                     }*/
                     setTimeout(() => {
-                        if (this.state === 'ready' && this.auto_mode || (this.isfreespin === true && this.freespin_count !== 0)) {
+                        if (this.state === 'ready' && this.auto_mode || (this.isfreespin === true && this.freespin_index > 0)) {
                             this.spin();
                         }
                     }, 500);
@@ -3830,27 +4037,18 @@ App.Gameplay = new Screen({
             });
         }
 
-
-
         //---- winamount animation texture container
         this[name + ' highlighttext'].removeChildren();
         this.buildChild(this[name + ' highlighttext'], {
             name: name + ' highlight animation1',
-            type: 'text',
+            type: 'bitmap-text',
             text: '35',
             styles: {
-                fill: 0xffe6aa,
-                fontSize: '80px',
-                fontWeight: 700,
-                dropShadow: true,
-                dropShadowAngle: 0.5,
-                dropShadowColor: 0xf6a3aa,
-                dropShadowDistance: 2,
-                dropShadowBlur: 25,
-                lineJoin: "bevel",
-                stroke: "#da7b77",
-                strokeThickness: 7,
-                padding: 20
+                font: {
+                    name: 'font',
+                    size: 80
+                },
+                tint: 0xFFFFFF
             }
         });
     },
@@ -4283,6 +4481,10 @@ App.Gameplay = new Screen({
             callback = null;
             return;
         }
+        if(this.auto_mode === true) {
+            callback.call(this);
+            return;
+        }
         // this['status panel win status bar'].visible = true;
 
         this.timeouts = [];
@@ -4347,12 +4549,6 @@ App.Gameplay = new Screen({
                 }
             }
             console.log("-->winanimation");
-            this.tween({
-                to: [
-                    ['alpha', 0.8, 10, 0, Power1.easeOut],
-                    ['visible', true, 10, 0, Power1.easeOut],
-                ]
-            }, this['passive overlay']);
 
             this.animateEachLine(this.spinCombination.winData.winLines, () => {
                 if (this.state !== 'ready') return;
@@ -4367,7 +4563,7 @@ App.Gameplay = new Screen({
 
                     this.state = 'ready';
                     // this.winAnimationMode = false;
-                    if (this.auto_mode || (this.isfreespin === true && this.freespin_count !== 0)) {
+                    if (this.auto_mode || (this.isfreespin === true && this.freespin_index > 0)) {
                         this.spin();
                     } else {
                         if (this.state === 'ready') this.winAnimation();
@@ -4375,6 +4571,12 @@ App.Gameplay = new Screen({
 
                 }, this.WIN_ANI_REPLAY_DELAY);
             });
+            this.tween({
+                to: [
+                    ['alpha', 0.8, 10, 0, Power1.easeOut],
+                    ['visible', true, 10, 0, Power1.easeOut],
+                ]
+            }, this['passive overlay']);
         } else {
 
             // if (this.creditsNotInc) {
@@ -4540,9 +4742,6 @@ App.Gameplay = new Screen({
             case 'audio_set button':
                 this.buttonHandlerAudioSet(container);
                 break;
-            case 'close button':
-                this.buttonHandlerClose(container);
-                break;
 
             default:
                 if (name.indexOf('button automenu') === 0) {
@@ -4574,7 +4773,7 @@ App.Gameplay = new Screen({
 
     buttonHandlerAuto: function (container, name) {
         if (this.auto_mode === true) {
-            this['auto start button text'].text = "AUTOPLAY";
+            this['auto start button text'].text = "AUTO\nPLAY";
             this.setStatusControlBar(['auto start button'], this.const.STATUS_TYPE.NORMAL);
             this['autoamount text'].visible = false;
             this.playSound('buttonClick', {}, {volume: this.sound_mode ? 1 : 0, loop: false});
@@ -4853,18 +5052,9 @@ App.Gameplay = new Screen({
         }
     },
 
-    buttonHandlerClose: function (container) {
-        this.closeGame();
-    },
-
     buttonHandlePaytable: function (container) {
         if(this.help_mode) {
             this.returnToOrginalFromHelp();
-            this['button paytable'].texture = this.getTexture('paytableButtonUp.png');
-
-            this.setStatusControlBar(['start button', 'auto start button', 'maxbet button', 'coin bar up', 'coin bar down', 'level bar down', 'level bar up'], this.const.STATUS_TYPE.NORMAL);
-            this['coin bar progress'].alpha = this['level bar progress'].alpha = 1;
-
             return;
         }
 
@@ -4874,8 +5064,8 @@ App.Gameplay = new Screen({
         this['InfoContainer'].visible = true;
         this['button paytable'].texture = this.getTexture('return.png');
 
-        this.setStatusControlBar(['start button', 'auto start button', 'maxbet button', 'coin bar up', 'coin bar down', 'level bar down', 'level bar up'], this.const.STATUS_TYPE.DISABLED);
-        this['coin bar progress'].alpha = this['level bar progress'].alpha = 0.5;
+        // this.setStatusControlBar(['start button', 'auto start button', 'maxbet button', 'coin bar up', 'coin bar down', 'level bar down', 'level bar up'], this.const.STATUS_TYPE.DISABLED);
+        // this['coin bar progress'].alpha = this['level bar progress'].alpha = 0.5;
 
         this.help_mode = true;
     },
@@ -4886,6 +5076,10 @@ App.Gameplay = new Screen({
         this['LogoContainer'].visible = true;
         this['InfoContainer'].visible = false;
         this.help_mode = false;
+        this['button paytable'].texture = this.getTexture('paytableButtonUp.png');
+
+        this.setStatusControlBar(['start button', 'auto start button', 'maxbet button', 'coin bar up', 'coin bar down', 'level bar down', 'level bar up'], this.const.STATUS_TYPE.NORMAL);
+        this['coin bar progress'].alpha = this['level bar progress'].alpha = 1;
     },
 
     setBetAmountValues: function (line_step, level_step, coin_step) {
@@ -4929,6 +5123,10 @@ App.Gameplay = new Screen({
 
         if (this.auto_mode) {
             this.animFieldPoints('autoamount', this.current_auto_amount);
+        }
+        if(this.isfreespin === true) {
+            this['freespin status win amount text'].text = this.server_win_amount.value;
+            this['freespin status totalWin amount text'].text = this.total_freespin_amount;
         }
 
         if (this.auto_mode === false) {
@@ -4987,23 +5185,26 @@ App.Gameplay = new Screen({
             position: (positions[1] == 2 || positions[1] == 3) ?
                         [this.COLUMNS_OFFSET * positions[1] - 2*this.COLUMNS_OFFSET,  (this.ROWS_OFFSET)* positions[0] - this.ROWS_OFFSET - this.REEL_POSY_OFFSET] :
                         [this.COLUMNS_OFFSET * positions[1] - 2*this.COLUMNS_OFFSET,  (this.ROWS_OFFSET)* positions[0] - this.ROWS_OFFSET],
-            //draw: [['beginFill', this.fillSet[fillSet]], ['drawRect', [-130, -70, 110, 8]]]
-            draw: [	['clear'],
+            draw: [['beginFill', fillSet], ['drawRoundedRect', [-3, -10, 9, 20]]]
+            /*draw: [	['clear'],
                     ['lineStyle',[20, fillSet]],
                     ['moveTo', [-3, 0]],
                     ['lineTo', [6, 0]]
-            ]
+            ]*/
         });
 
-        this.buildChild(this[elName], {
-            name: elName + 'inner line',
-            type: 'graphics',
-            draw: [	['clear'],
-                    ['lineStyle',[12, 0x0077fe]],
-                    ['moveTo', [-4, 0]],
-                    ['lineTo', [8, 0]]
-                ]
-        });
+        // if(positions[1] < 4) {
+            this.buildChild(this[elName], {
+                name: elName + 'inner line',
+                type: 'graphics',
+                draw: [['beginFill', 0x0077fe], ['drawRoundedRect', [-4, -6, 6, 12]]]/*
+                draw: [	['clear'],
+                        ['lineStyle',[12, 0x0077fe]],
+                        ['moveTo', [-4, 0]],
+                        ['lineTo', [4, 0]]
+                    ]*/
+            });
+        // }
     },
 
     drawWinCombinationChains(matchedLinePath, ruleNum) {
@@ -5026,20 +5227,22 @@ App.Gameplay = new Screen({
             name : 'connectLine-' + 'start',
             type : 'graphics',
             position : [firstObj.params.position[0] - this.COLUMNS_OFFSET/4, firstObj.params.position[1]],
+            draw: [['beginFill', 0xffffff], ['drawRoundedRect', [-this.COLUMNS_OFFSET/4, -10, this.COLUMNS_OFFSET/2, 20, 5]]],/*
             draw: [	['clear'],
                     ['lineStyle',[20, 0xffffff]],
                     ['moveTo', [-this.COLUMNS_OFFSET/4, 0]],
                     ['lineTo', [this.COLUMNS_OFFSET/4, 0]]
-            ]
+            ]*/
         });
         this.buildChild(this['connectLine-' + 'start'], {
             name: 'connectLine-' + 'start' + 'inner line',
             type: 'graphics',
+            draw: [['beginFill', 0x0077fe], ['drawRect', [-this.COLUMNS_OFFSET/4, -6, this.COLUMNS_OFFSET/2, 12, 5]]]/*
             draw: [	['clear'],
                     ['lineStyle',[12, 0x0077fe]],
                     ['moveTo',[-this.COLUMNS_OFFSET/4, 0]],
                     ['lineTo',  [this.COLUMNS_OFFSET/4, 0]]
-                ]
+                ]*/
         });
 
         this.buildChild(this['PayLine-' + ruleNum], {
@@ -5047,7 +5250,6 @@ App.Gameplay = new Screen({
             type: 'text',
             text: ruleNum+1,
             anchor: [0.5,0.5],
-            scale : [1,1],
             position: [firstObj.params.position[0] - this.COLUMNS_OFFSET/2 - 50, firstObj.params.position[1]],
             styles: {
                 align: 'center',
@@ -5055,7 +5257,7 @@ App.Gameplay = new Screen({
                 fontWeight: '400',
                 fontSize: '70px',
                 padding: 30,
-                fontFamily: 'BerlinSansFBDemi-Bold', //'Oswald-Bold',
+                fontFamily: 'PFDinDisplayPro-Bold', //'Oswald-Bold',
                 fill: 0xffffff,
                 stroke: [0x005daa],
                 strokeThickness: 10,
@@ -5074,11 +5276,14 @@ App.Gameplay = new Screen({
 			let startPosX = currObj.params.position[0] + this.COLUMNS_COUNT/2;
             let startPosY = currObj.params.position[1];
 
+            let width = (nextObj.params.position[1] - currObj.params.position[1] === 0 ? 20 : 21);
 			this.buildChild(this['PayLine-' + ruleNum], {
 				name: 'connectLine-' + '(' + sortedPath[i][1] + ',' + sortedPath[i][0] + ')',
 				type: 'graphics',
 				position: [startPosX, startPosY],
-				//draw: [['beginFill', this.fillSet[fillSet]], ['drawRect', [-130, -70, 110, 8]]]
+				/*draw: [['beginFill', 0xffffff],
+                    ['drawRect', [0, -width / 2, 2 * Math.abs(nextObj.params.position[0] - currObj.params.position[0]), width]]
+                ]*/
 				draw: [	['clear'],
 						['lineStyle',[(nextObj.params.position[1] - currObj.params.position[1] == 0 ? 20 : 21), 0xffffff]],
 						['moveTo', [0, 0]],
@@ -5104,84 +5309,46 @@ App.Gameplay = new Screen({
 
         this.buildChild(this['PayLine-' + ruleNum], {
             name: 'PayLineAmount-' + ruleNum,
-            type: 'text',
+            type: 'bitmap-text',
             text: ruleNum+1,
-            anchor: [0.5,0.5],
-            scale : [1,1],
             position: [this['elementLine-' + '(' + sortedPath[2][1] + ',' + sortedPath[2][0] + ')'].params.position[0] + this.COLUMNS_COUNT/2,
                        this['elementLine-' + '(' + sortedPath[2][1] + ',' + sortedPath[2][0] + ')'].params.position[1]],
             styles: {
-                align: 'center',
-                fontStyle: 'italic',
-                fontWeight: '10',
-                fontSize: '150px',
-                padding: 30,
-                fontFamily: 'Bauhaus_93_regular', //'Oswald-Bold',
-                fill: [0xffffff,0xfffdd3, 0xc54700, 0xf9ca00],
-                fillGradientStops: [0.55, 0.35, 0.25],
-                stroke: [0xef4e4e],
-                strokeGradientStops: [0.55],
-                strokeThickness: 25,
-                dropShadow: true,
-                dropShadowBlur: 25,
-                dropShadowAlpha: 1,
-                dropShadowColor: 0x581d00,
-                dropShadowDistance: 20,
-                letterSpacing: 20,
-                lineJoin: "bevel",
+                font: {
+                    name: 'font',
+                    size: 40
+                },
+                tint: 0xFFFFFF
             }
         });
     },
 
     updateTickerText: function () {
-
         clearTimeout(this.tickerTimeout);
-
         switch (this['status text'].text) {
-
-            case 'win on up to 76 bet lines':
-
+            case 'Win on up to 76 bet lines':
                 this.tickerTimeout = setTimeout(() => {
-
                     this['status text'].text = '3 or more Free spin symbols activate Free spins';
-
                     this.updateTickerText();
-
                 }, 6000);
-
                 break;
-
             case '3 or more Free spin symbols activate Free spins':
-
                 this.tickerTimeout = setTimeout(() => {
-
-                    this['status text'].text = 'win on up to 76 bet lines';
-
+                    this['status text'].text = 'Win on up to 76 bet lines';
                     this.updateTickerText();
-
                 }, 6000);
-
                 break;
-
             case 'WINNER!':
-
                 this.tickerTimeout = setTimeout(() => {
-
-                    this['status text'].text = 'win on up to 76 bet lines';
+                    this['status text'].text = 'Win on up to 76 bet lines';
                     this['status win box'].alpha = 0;
                     this['status text'].alpha = 1;
-
                     this.updateTickerText();
-
                 }, 6000);
-
                 break;
-
             default:
-
                 break;
         }
-
     },
     setStatusText: function (text) {
         this['status text'].text = text;
@@ -5254,10 +5421,10 @@ App.Gameplay = new Screen({
             var card_count;
             var symbols = this.spinCombination.symbols;
             var pos_array = [];
-            var linePosIdx = serverData[k].linePosIdx;
+            var linePosIdx = serverData[k].lineposIdx;
             //card_count = serverData[k].cardCount === 3 ? 1 : serverData[k].cardCount;
-            card_count = serverData[k].payLine.length;
-            pay_line = this.spinCombination.paylines[serverData[k].linePosIdx];
+            card_count = serverData[k].cardCount;
+            pay_line = this.spinCombination.paylines[serverData[k].lineposIdx];
             pay_line = this.removeCellMatrix(pay_line, serverData[k].cardCount);
             symbol_name = this.spinCombination.uniquesymbols[serverData[k].audioIndex];
             for (var i = 0; i < this.COLUMNS_COUNT; i++) {
@@ -5364,7 +5531,7 @@ App.Gameplay = new Screen({
         //var response = "{\"error\":\"0\",\"response\":{\"initCards\":[[2,0,2],[2,2,5],[3,2,2],[4,2,0],[1,1,2]],\"arrRetVal\":[{\"retType\":7,\"wildReelAry\":[4,6]},{\"retType\":0,\"win\":3000,\"linePosIdx\":4,\"cardCount\":4,\"direction\":1},{\"retType\":0,\"win\":1400,\"linePosIdx\":6,\"cardCount\":3,\"direction\":1}],\"betAmount\":200,\"winAmount\":4400,\"balance\":6058206.7}}";
         //var response = '{"error":"0","response":{"initCards":[[3,5,4,2,2],[6,5,3,2,5],[0,5,4,2,1],[6,2,3,2,0],[4,3,3,1,2]],"arrRetVal":[{"retType":0,"win":15,"linePosIdx":0,"cardCount":5}],"betAmount":20,"winAmount":350,"balance":10015}}';
         //var response = '{"error":"0","response":{"initCards":[[-1,-1,3,4,3],[-1,-1,1,2,5],[-1,1,0,0,1],[-1,0,2,1,2],[4,6,3,5,0]],"arrRetVal":[],"betAmount":5,"winAmount":0,"balance":10000}}';
-        var response =  '{"error":"0","response":{"initCards":[[-1,-1,5,5,0],[-1,-1,5,2,0],[-1,3,2,4,0],[-1,3,4,3,0],[0,1,5,0,2]],' +
+        /*var response =  '{"error":"0","response":{"initCards":[[-1,-1,5,2,0],[-1,-1,5,6,0],[-1,3,2,4,0],[-1,3,6,3,0],[7,1,5,0,2]],' +
                         '"arrRetVal":[' +
                             '{"retType":0,"win":25,"linePosIdx":0,"payLine":[4,9,14,19]},' +
                             '{"retType":0,"win":100,"linePosIdx":1,"payLine":[4,9,14,19,23]},'+
@@ -5390,14 +5557,20 @@ App.Gameplay = new Screen({
                             '{"retType":0,"win":5,"linePosIdx":73,"payLine":[2,7]},'+
                             '{"retType":0,"win":5,"linePosIdx":74,"payLine":[2,7]},'+
                             '{"retType":0,"win":5,"linePosIdx":75,"payLine":[2,7]}],'+
-                        '"betAmount":5,"winAmount":255,"balance":100255}}';
-        var serverData = JSON.parse(response);
-        return serverData;
+                        '"betAmount":5,"winAmount":255,"balance":100255}}';*/
+        var response = [
+            {"error":"0","response":{"valid":1,"initCards":[[-1,-1,3,3,4],[-1,-1,4,4,2],[-1,5,5,4,4],[-1,4,4,0,6],[7,7,7,7,5]],"arrRetVal":[{"retType":0,"win":4,"lineposIdx":10,"cardCount":3},{"retType":5,"linkReel":0},{"retType":0,"win":4,"lineposIdx":11,"cardCount":3},{"retType":0,"win":4,"lineposIdx":12,"cardCount":3},{"retType":0,"win":4,"lineposIdx":13,"cardCount":3},{"retType":0,"win":8,"lineposIdx":14,"cardCount":4},{"retType":0,"win":8,"lineposIdx":15,"cardCount":4}],"betAmount":20,"originalBetAmount":20,"winAmount":32,"winType":0,"balance":100255}},
+            {"error":"0","response":{"valid":1,"initCards":[[-1,-1,0,6,7],[-1,-1,0,4,2],[-1,6,0,3,2],[-1,6,7,4,5],[5,3,3,6,6]],"arrRetVal":[{"retType":1,"arrMatchedCardsXPos":[0,1,2],"arrMatchedCardsYPos":[2,2,2],"count":8}],"betAmount":20,"originalBetAmount":20,"winAmount":0,"winType":0,"balance":100255}},
+            {"error":"0","response":{"valid":1,"initCards":[[-1,-1,6,6,6],[-1,-1,1,1,1],[-1,5,5,5,6],[-1,5,4,4,4],[7,7,7,7,7]],"arrRetVal":[{"retType":2,"wildReel":2},{"retType":0,"win":3,"lineposIdx":0,"cardCount":3},{"retType":0,"win":3,"lineposIdx":1,"cardCount":3},{"retType":0,"win":3,"lineposIdx":2,"cardCount":3},{"retType":0,"win":3,"lineposIdx":3,"cardCount":3}],"betAmount":20,"originalBetAmount":20,"winAmount":12,"winType":0,"balance":10000}}
+        ];
+        let randId = this.isfreespin ? 0: 1;
+        randId = 2;
+        return response[randId];
     },
 
     getInitData: function () {
         var options = {
-            endpoint: 'zt_get_setting',
+            endpoint: 'game_info',
             params: [
                 {
                     key: 'gamesession_id',
@@ -5439,49 +5612,45 @@ App.Gameplay = new Screen({
     getServerCardsInfo: function (bet, isfreespin) {
 
         var options = {
-            endpoint: 'zt_play_game',
+            endpoint: 'play_game',
             params: [
-                {
-                    key: 'lines',
-                    value: 0
-                },
-                {
-                    key: 'bet',
-                    value: this.levels.step - 1
-                },
-                {
-                    key: 'denom',
-                    value: this.coins.step - 1
-                },
-                {
-                    key: 'gamespec',
-                    value: this.gamespec
-                },
-                {
-                    key: 'isfreespin',
-                    value: isfreespin
-                },
-                {
-                    key: 'gamesession_id',
-                    value: this.gamesession_id
-                },
-                {
-                    key: 'initbalance',
-                    value: this.credits.value
-                },
-                {
-                    key: 'play_for_fun',
-                    value: 0
-                }
+                { key: 'lines',value: 0 },
+                { key: 'bet', value: this.levels.step - 1 },
+                { key: 'denom', value: this.coins.step - 1 },
+                { key: 'gamespec', value: this.gamespec },
+                { key: 'isfreespin', value: isfreespin },
+                { key: 'gamesession_id', value: this.gamesession_id },
+                { key: 'initbalance', value: this.credits.value },
+                { key: 'play_for_fun', value: 0 }
             ]
         };
+        return this.apiRequest(options);
+    },
 
-        if (isfreespin === true) {
-            options.params.push({
-                key: 'wildReelAry',
-                value: this.wildReelArray
-            })
-        }
+    getFreespinResult: function(amount) {
+        var options = {
+            endpoint: 'freespin_result',
+            params: [
+                { key: 'lines',          value: 0 },
+                { key: 'bet',            value: this.levels.step - 1 },
+                { key: 'denom',          value: this.coins.step - 1 },
+                { key: 'gamespec',       value: this.gamespec },
+                { key: 'gamesession_id', value: this.gamesession_id },
+                { key: 'initbalance',    value: this.credits.value},
+                { key: 'play_for_fun',   value: 0  },
+                { key: 'bonus_amount',    value: amount },
+            ]
+        };
+        return this.apiRequest(options);
+    },
+    sendSignalToSite: function () {
+        var options = {
+            endpoint: 'game_ping',
+            params: [{
+                key: 'session_id',
+                value: this.gamesession_id
+            }]
+        };
         return this.apiRequest(options);
     },
 
@@ -5493,7 +5662,7 @@ App.Gameplay = new Screen({
         return this.apiRequest(options);
     },
 
-    /*-------------------New generated methods by Jenson only for Fairytale-------------------*/
+    /*-------------------New generated methods-------------------*/
     setStatusControlBar: function (names, status) {
         let bar_names = ['start button bar', 'maxbet button bar', 'auto start button bar', 'coin bar up container', 'coin bar down container', 'level bar down container', 'level bar up container', 'refresh start button bar'];
         let button_names = ['start button', 'maxbet button', 'auto start button', 'coin bar up', 'coin bar down', 'level bar down', 'level bar up', 'refresh start button'];
@@ -5513,6 +5682,47 @@ App.Gameplay = new Screen({
                 } else if (status === this.const.STATUS_TYPE.VISIBLE) {
                     this[bar_names[i]].visible = true;
                 }
+            }
+        }
+    },
+
+    reelBackLoopAnimation: function(reel) {
+        /*this.tween({
+            set: [
+                ['visible', 1]
+            ],
+            to: [
+                ['alpha', 0.8, 500]
+            ]
+        }, 'passive overlay');*/
+        /*for (let i = 0 ; i < reel; i++) {
+            this[`reel ${i+1} passive overlay`].visible = true;
+        }*/
+        for(let j = 0; j < 3; j++) {
+            if (reel === 2 || reel === 3) {
+                setTimeout(() => {
+                    for (let i = 7; i < 11; i++) {
+                        setTimeout(() => {
+                            this[`reel ${reel} symbol ${i} flashBack`].visible = true;
+                            this[`reel ${reel} symbol ${i} flashBack`].gotoAndPlay(0);
+                            setTimeout(() => {
+                                this[`reel ${reel} symbol ${i} flashBack`].visible = false;
+                            }, 300);
+                        }, 100 * (i - 7));
+                    }
+                }, j * 300);
+            } else {
+                setTimeout(() => {
+                    for (let i = 6; i < 11; i++) {
+                        setTimeout(() => {
+                            this[`reel ${reel} symbol ${i} flashBack`].visible = true;
+                            this[`reel ${reel} symbol ${i} flashBack`].gotoAndPlay(0);
+                            setTimeout(() => {
+                                this[`reel ${reel} symbol ${i} flashBack`].visible = false;
+                            }, 300);
+                        }, 100 * (i - 6));
+                    }
+                }, j * 400);
             }
         }
     },
@@ -5565,33 +5775,69 @@ App.Gameplay = new Screen({
         }
     },
 
-    wildAnimation: function (wildReelAry) {
-        this.isfreespin = true;
-        this.wildhighlightSprites = [];
-        for (let i = 0; i < wildReelAry.length; i++) {
-            let x_pos = Math.floor(wildReelAry[i] / 3);
-            let y_pos = (2 - wildReelAry[i] % 3);
-            this.wildhighlightSprites.push(this.reels[x_pos].wildHighlight.children[this.ROWS_COUNT + 1 + y_pos].children[0].params.name.replace('crisp', 'highlight'));
-        }
+    wildAnimation: function (reel) {
+        if(this.wildAnimationStart === false) return;
+        if(reel === -1) return;
+        this['win bar overlay'].visible = true;
         this.tween({
-            name: 'win-animation',
-            to: [
-                ['alpha', 1, 300],
-                ['visible', true]
-            ]
-        }, this.wildhighlightSprites)
+            set: [['visible', 1], ['alpha', 0]],
+            to: ['alpha', 1, 700]
+        }, `reel ${reel} wild overlay`);
+        this.tween({
+            set: ['scale', [0.03, 1]]
+        }, `reel ${reel} wild back`);
+        setTimeout(() => {
+            this.tween({
+                set: [['visible', 1], ['scale', [0.03, 1]]],
+                to: ['scale', [1, 1], 600]
+            }, `reel ${reel} wild back`);
+            setTimeout(() => {
+                this.tween({
+                    to: ['alpha', 0, 500],
+                    next: {
+                        set: ['visible', 0]
+                    }
+                }, `reel ${reel} wild overlay`);
+                setTimeout(() => {
+                    this['win bar overlay'].visible = false;
+                    this.wildAnimationStart = false;
+                    this.showWildCard(reel);
+                }, 500);
+            }, 600);
+        }, 700);
     },
 
-    hideWildanimation: function () {
+    showWildCard: function(reel){
+        for(let i = 0; i < this.REEL_SYMBOLS_COUNT; i++) {
+            this.tween({
+                set: [['alpha', 0], ['visible', 1]],
+                to: ['alpha', 1, 400]
+            }, [`reel ${reel - 1} wildsymbol ${i}`, `reel ${reel - 1} wildsymbol back ${i}`, `reel ${reel - 1} wildsymbol ${i} label`]);
+            setTimeout(() => {
+                this[`reel ${reel - 1} wildsymbol ${i}`].gotoAndPlay(0);
+                this[`reel ${reel - 1} wildsymbol back ${i}`].gotoAndPlay(0);
+            }, 400);
+            // this[`reel ${reel - 1} wildsymbol ${i}`].visible = true;
+            // this[`reel ${reel - 1} wildsymbol back ${i}`].visible = true;
+            // this[`reel ${reel - 1} wildsymbol ${i} label`].visible = true;
+            setTimeout(() => {
+                this.tween({
+                    set: ['alpha', 1],
+                    to: ['alpha', 0, 300],
+                    next: {
+                        set: ['visible', 0]
+                    }
+                }, `reel ${reel - 1} wildsymbol ${i} label`);
+            }, 2000 + 150 * i)
+        }
+    },
 
-        this.tween({
-            name: 'win-animation',
-            to: [
-                ['alpha', 0, 300],
-                ['visible', false]
-            ]
-        }, this.wildhighlightSprites)
-        this.isfreespin = false;
+    stopWildCard: function(reel) {
+        if(reel === -1) return;
+        for(let i = 0; i < this.REEL_SYMBOLS_COUNT; i++) {
+            this[`reel ${reel - 1} wildsymbol ${i}`].gotoAndStop(0);
+            this[`reel ${reel - 1} wildsymbol back ${i}`].gotoAndStop(0);
+        }
     },
 
     hideWinanimation: function () {
@@ -5628,15 +5874,102 @@ App.Gameplay = new Screen({
         for (let i = 0; i < 5; i++) {
             if (number !== i) {
                 let tweenname = "info indicator " + (i + 1) + " disabled";
-                this[tweenname].alpha = 1;
+                this[tweenname].alpha = 0;
             } else {
                 let tweenname = "info indicator " + (i + 1) + " disabled";
-                this[tweenname].alpha = 0;
+                this[tweenname].alpha = 1;
             }
         }
     },
 
-    /*-------------------New generated methods by Jenson only for Fairytale-------------------*/
+    freespinShowingAnimation: function() {
+        this.startFlashWhite();
+        setTimeout(() => {
+            this['FreespinIntroContainer'].visible = true;
+        }, 500);
+        setTimeout(() => {
+            this.hideFreespinIntroAnimation();
+        }, 5000);
+    },
+
+    startFlashWhite: function() {
+        this.tween({
+            set: [
+                ['visible', 1],
+                ['alpha', 0]
+            ],
+            to: [
+                ['alpha', 1, 500]
+            ],
+            next: {
+                to: [
+                    'alpha', 0, 300
+                ],
+                next: {
+                    set: ['visible', 0]
+                }
+            }
+        }, 'FlashContainer');
+    },
+
+    hideFreespinIntroAnimation: function() {
+        this.startFlashWhite();
+        setTimeout(() => {
+            this.hideWinanimation();
+            this.auto_mode = true;
+            this.isfreespin = true;
+            this.current_auto_amount = this.freespin_count;
+            this['game background'].texture = this.getTexture("freespinBackground");
+            this['FreespinIntroContainer'].visible = false;
+            this['control panel container wrapper'].visible = false;
+            this['StatusBarContainer'].visible = false;
+            this['freespin control panel container wrapper'].visible = true;
+            this['FreespinStatsuBarContainer'].visible = true;
+            this.spin();
+        }, 500);
+    },
+
+    reelLinkAnimation: function(reel) {
+        this.linkedAnimation = false;
+        if(reel === 0 || reel === 2) {
+            this['win bar overlay'].visible = true;
+            this.tween({
+                set: [['visible', 1], ['alpha', 0]],
+                to: ['alpha', 1, 500]
+            }, `reel ${reel} glow overlay`);
+            setTimeout(() => {
+                this[`reel ${reel+1} passive overlay`].visible = false;
+                this[`reel ${reel+2} passive overlay`].visible = false;
+                this.tween({
+                    set: [
+                        ['visible', 1],
+                        ['y', reel === 0 ? -500 : -700]
+                    ],
+                    to: ['y', -3, 800],
+                    next: {
+                        to: ['visible', 1, 600],
+                        next: {
+                            set: ['visible', 0]
+                        }
+                    }
+                }, [`reel ${reel} whiteblast`, `reel ${reel+1} whiteblast`]);
+                setTimeout(() => {
+
+                }, 1400);
+            }, 500);
+        }
+    },
+
+    hideReelLinkAnimation: function() {
+        this[`reel 5 passive overlay`].visible = false;
+        if(this.linkReel === -1) return;
+        let reel = this.linkReel;
+        this['win bar overlay'].visible = false;
+        this[`reel ${reel} glow overlay`].visible = false;
+        this.linkReel = -1;
+    },
+
+    /*-------------------New generated methods-------------------*/
 
     interval: 0,
     server_initMatrix: [],
@@ -5650,9 +5983,6 @@ App.Gameplay = new Screen({
     },
     gamesession_id: "",
     session_id: 0,
-
-    hill_interval: null,
-    rabbit_interval: null,
 
     api_url: "https://ace.777berserk.org/api/",
     // api_url: "http://localhost:8000/api/",

@@ -2,9 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5463d70e-0ee6-49b4-ac2e-871c20f588b4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fonts/font.fnt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fonts/font.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/wildSoftOverlay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/wildSoftRays.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/background/freespinBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/background/freespinIntroBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/background/freespinOutroBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/background/paytableBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/cards/SYM7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/cards/SYM7_BLURRED.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/cards/SYM7_glow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/cards/wildcardlabel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/controls/continueButtonFill.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/controls/continueButtonStart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/controls/selectorBarFillBack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/help4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/linkedReelsFrameGlow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/linkedReelsLightRay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/wildSoftOverlay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/wildSoftRays.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/wildWhiteBlast.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/textures/wildSymbols.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/textures/wildSymbols.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fonts/PFDinDisplayPro-Bold.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Screens/Gameplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/App/Screens/Gameplay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/AGLettericaDemiCondensedC.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/AGLettericaDemiCondensedC.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Bauhaus_93_regular.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Bauhaus_93_regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/BerlinSansFBDemi-Bold.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/BerlinSansFBDemi-Bold.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Myriad Pro Black Condensed.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Myriad Pro Black Condensed.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/MyriadPro-Regular.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/MyriadPro-Regular.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/MyriadPro-Semibold.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/MyriadPro-Semibold.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/NETENT_MyriadPro-Bold.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/NETENT_MyriadPro-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/NETENT_MyriadPro-Regular.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/NETENT_MyriadPro-Regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Oswald-Bold.css" beforeDir="false" afterPath="$PROJECT_DIR$/Fonts/PFDinDisplayPro-Bold.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Oswald-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/PFDinDisplayPro-Black - Copy.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/PFDinDisplayPro-Black.css" beforeDir="false" afterPath="$PROJECT_DIR$/Fonts/PFDinDisplayPro-Black.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Vinque.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/Vinque.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/a_LCDNova.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/a_LCDNova.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/pfdindisplaypro-reg-webfont.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fonts/pfdindisplaypro-reg-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Math/Slots/Escalibur.js" beforeDir="false" afterPath="$PROJECT_DIR$/Math/Slots/Escalibur.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/cards/download (21).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/controls/continueButtonEnd.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/controls/continueButtonEnd.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/textures/highlight_1.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/textures/highlight_1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +80,17 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/textures" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\pkm\xampp7\htdocs\slot\dazzle-me\assets\textures" />
+      <recent name="E:\pkm\xampp7\htdocs\slot\dazzle-me\assets\images" />
+      <recent name="E:\pkm\xampp7\htdocs\slot\dazzle-me\assets\fonts" />
+      <recent name="E:\pkm\xampp7\htdocs\slot\dazzle-me\assets\images\background" />
+      <recent name="E:\pkm\xampp7\htdocs\slot\dazzle-me\Fonts" />
+    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -37,6 +103,7 @@
         </serviceView>
       </list>
     </option>
+    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -51,7 +118,20 @@
       <workItem from="1584896519297" duration="653000" />
       <workItem from="1584946649890" duration="1998000" />
       <workItem from="1584961627323" duration="1206000" />
-      <workItem from="1584977795705" duration="1818000" />
+      <workItem from="1584977795705" duration="3126000" />
+      <workItem from="1585031973354" duration="12115000" />
+      <workItem from="1585063271846" duration="14590000" />
+      <workItem from="1585118476665" duration="4418000" />
+      <workItem from="1585148917797" duration="15459000" />
+      <workItem from="1585207606150" duration="3862000" />
+      <workItem from="1585235133468" duration="22600000" />
+      <workItem from="1585290916870" duration="7590000" />
+      <workItem from="1585324315378" duration="1246000" />
+      <workItem from="1585405960222" duration="1100000" />
+      <workItem from="1585423929499" duration="2397000" />
+      <workItem from="1585464396955" duration="4870000" />
+      <workItem from="1585494578915" duration="5440000" />
+      <workItem from="1585549545593" duration="22298000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1584980303125</created>
@@ -77,13 +157,33 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="585" y="119" key="CommitChangelistDialog2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584980300577" />
+    <state x="461" y="168" key="SettingsEditor" timestamp="1585036781329">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="168" key="SettingsEditor/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585036781329" />
     <state x="552" y="259" key="Vcs.Push.Dialog.v2" timestamp="1584980306493">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="259" key="Vcs.Push.Dialog.v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584980306493" />
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1584977820081">
+    <state x="520" y="128" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585572126214">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584977820081" />
+    <state x="520" y="128" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585572126214" />
+    <state x="769" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585570845676">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="769" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585570845676" />
+    <state x="656" y="257" width="737" height="606" key="find.popup" timestamp="1585561659516">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="656" y="257" width="737" height="606" key="find.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585561659516" />
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup" timestamp="1585572185853">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="616" y="243" width="672" height="677" key="run.anything.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585572185853" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1585518276016">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585518276016" />
   </component>
 </project>
